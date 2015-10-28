@@ -35,14 +35,9 @@ This project depends on the following packages.
 git clone <THIS_REPOSITORY_URL>
 cd <THIS_REPOSITORY>
 
-# This installs bower packages in bower.js
-bower install
-
-# This installs SASS compiler
-bundle install --path vendor/bundle
-
-# This installs the grunt plugins in package.js
-npm install
+# This will do the installation.
+chmod +x prepare.sh
+./prepare.sh
 ```
 
 ### Development
