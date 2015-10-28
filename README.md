@@ -43,6 +43,8 @@ chmod +x prepare.sh
 ### Development
 * when you want to compile SASS to CSS
 ```sh
-bundle exec sass
+bundle exec sass input.scss output.css
+bundle exec sass --watch sass/input.scss:css/output.css
 ```
-
+For more info about using Sass
+  * http://sass-lang.com/documentation/file.SASS_REFERENCE.html
