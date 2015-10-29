@@ -8,22 +8,42 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
+  <!-- Bootstrap Offcanvas CSS -->
+  <link rel="stylesheet" href="css/offcanvas.css">
+
   <!-- Custome CSS -->
   <link rel="stylesheet" href="css/style.css">
 
   <title>My Neighborhood Map</title>
 </head>
 <body>
+  <nav>
+    <ul class="list-inline visible-xs-block visible-sm-block">
+      <li><button type="button" class="btn" data-toggle="offcanvas"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button></li>
+    </ul>
+  </nav>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3 panel">
+    <div class="row row-offcanvas row-offcanvas-left">
+      <div class="col-md-3 col-sm-3 panel sidebar-offcanvas">
         <p>aaa</p>
       </div>
-      <div class="col-md-9 map-container">
+      <div class="col-md-9 col-sm-9 map-container">
         <p>bbb</p>
       </div>
     </div>
   </div>
+
+  <!-- Critical JavaScripts -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+  // taken from https://getbootstrap.com/examples/offcanvas
+    $(document).ready(function () {
+      $('[data-toggle="offcanvas"]').click(function () {
+        console.log('clicked');
+          $('.row-offcanvas').toggleClass('active');
+      });
+    });
+  </script>
 </body>
 </html>
