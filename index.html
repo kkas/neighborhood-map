@@ -14,21 +14,55 @@
   <!-- Custome CSS -->
   <link rel="stylesheet" href="css/style.css">
 
+  <style>
+  html,
+body,
+.row,
+.container-fluid,
+.map-container,
+.map-embed,
+.map-canvas
+ {
+  /*width: 100%;*/
+  height: 100%;
+}
+  </style>
+
   <title>My Neighborhood Map</title>
 </head>
 <body>
-  <nav>
-    <ul class="list-inline visible-xs-block visible-sm-block">
-      <li><button type="button" class="btn" data-toggle="offcanvas"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button></li>
-    </ul>
-  </nav>
   <div class="container-fluid">
-    <div class="row row-offcanvas row-offcanvas-left">
-      <div class="col-md-3 col-sm-3 panel sidebar-offcanvas">
-        <p>aaa</p>
+    <!-- row -->
+    <div class="row row-offcanvas menu row-offcanvas-left">
+      <!-- col: side menu -->
+      <!-- TODO: size -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 menu sidebar-offcanvas">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Filter" aria-describedby="basic-addon2">
+          <span class="input-group-addon" id="basic-addon2">Filter <span class="glyphicon glyphicon-filter" aria-hidden="true"></span></span>
+        </div>
+        <ul>
+          <li>aaa</li>
+          <li>aaa</li>
+          <li>aaa</li>
+          <li>aaa</li>
+          <li>aaa</li>
+        </ul>
       </div>
-      <div class="col-md-9 col-sm-9 map-container">
-        <p>bbb</p>
+
+      <!-- <div class="clearfix"></div> -->
+
+      <!-- col: map container -->
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 map-container">
+        <ul class="list-inline hidden-lg">
+          <li>
+            <button type="button" class="btn" data-toggle="offcanvas"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button>
+          </li>
+        </ul>
+        <div class="map-embed">
+          <!-- TODO: -->
+          <div id="map-canvas" class="map-canvas"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -45,6 +79,24 @@
           $('.row-offcanvas').toggleClass('active');
       });
     });
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script>
+    // キャンパスの要素を取得する
+    var canvas = document.getElementById( 'map-canvas' ) ;
+
+    // 中心の位置座標を指定する
+    var latlng = new google.maps.LatLng( 35.792621 , 139.806513 );
+
+    // 地図のオプションを設定する
+    var mapOptions = {
+      zoom: 15 ,        // ズーム値
+      center: latlng ,    // 中心座標 [latlng]
+    };
+
+    // [canvas]に、[mapOptions]の内容の、地図のインスタンス([map])を作成する
+    var map = new google.maps.Map( canvas , mapOptions );
+    console.log("latlng:", latlng);
   </script>
 </body>
 </html>
