@@ -41,12 +41,8 @@ body,
           <input type="text" class="form-control" placeholder="Filter" aria-describedby="basic-addon2">
           <span class="input-group-addon" id="basic-addon2">Filter <span class="glyphicon glyphicon-filter" aria-hidden="true"></span></span>
         </div>
-        <ul>
-          <li>aaa</li>
-          <li>aaa</li>
-          <li>aaa</li>
-          <li>aaa</li>
-          <li>aaa</li>
+        <ul data-bind="foreach: venuesList">
+          <li data-bind="text: name">aaa</li>
         </ul>
       </div>
 
@@ -79,22 +75,6 @@ body,
     });
   </script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
-  <script>
-    // キャンパスの要素を取得する
-    var canvas = document.getElementById( 'map-canvas' ) ;
-
-    // 中心の位置座標を指定する
-    var latlng = new google.maps.LatLng( 35.792621 , 139.806513 );
-
-    // 地図のオプションを設定する
-    var mapOptions = {
-      zoom: 15 ,        // ズーム値
-      center: latlng ,    // 中心座標 [latlng]
-    };
-
-    // [canvas]に、[mapOptions]の内容の、地図のインスタンス([map])を作成する
-    var map = new google.maps.Map( canvas , mapOptions );
-    console.log("latlng:", latlng);
-  </script>
+  <script src="js/app.js"></script>
 </body>
 </html>
