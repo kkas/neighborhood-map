@@ -27,10 +27,15 @@ $(function() {
    */
   var ViewModel = function() {
     var self = this,
-      map;
+      map,
+      currentInfoWindow;
 
     self.venuesList = ko.observableArray([]);
+    //TODO: check if this need to be observable.
     self.markers = ko.observableArray([]);
+    self.infoWindows = ko.observableArray([]);
+
+    self.curVenue = ko.observable({});
 
     /**
      * [addVenues description]
@@ -75,14 +80,78 @@ $(function() {
     self.createMarkers = function(venuesAry) {
 
       venuesAry.forEach(function(venue) {
-        var location = venue.location;
+        var location = venue.location,
+          position = new google.maps.LatLng(location.lat, location.lng),
+          marker = new google.maps.Marker({map: self.map, position: position}),
+          infoWindow = new google.maps.InfoWindow({
+            content: self.createContent(venue)
+          });
 
-        self.markers.push(new google.maps.Marker({
-          map: self.map,
-          position: new google.maps.LatLng(
-            location.lat, location.lng)
-        }));
+        // Add the marker.
+        self.markers.push(marker);
+
+        // Open the infoWindow when the marker is clicked
+        marker.addListener('click', function(e) {
+
+          infoWindow.open(self.map, marker);
+
+          // Only one infoWindow can be open at once.
+          if (self.currentInfoWindow !== undefined) {
+            self.currentInfoWindow.close();
+          }
+
+          self.currentInfoWindow = infoWindow;
+        });
       });
+    };
+
+    /**
+     * [createContent description]
+     * @param  {[type]} venue [description]
+     * @return {[type]}       [description]
+     */
+    //TODO: need to change?
+    self.createContent = function(venue) {
+      var venueInfo = {
+        name: venue.name || '',
+        description: venue.description || '',
+        contact: self.createContact(venue.contact) || '',
+        popular: venue.popular || '',
+        likes: venue.likes || '',
+        shortUrl: venue.shortUrl || '',
+      },
+      content = '<div class="content">',
+      key;
+
+      for (key in venueInfo) {
+        if (venueInfo) {
+          content += '<p>' + venueInfo[key] + '</p>';
+        }
+      }
+      content += '</div>';
+
+      return content;
+    };
+
+    /**
+     * [createContact description]
+     * @param  {[type]} contact [description]
+     * @return {[type]}         [description]
+     */
+    self.createContact = function(contact) {
+      var contactString = '<ul class="list-inline">',
+        key;
+
+      for (key in contact) {
+        if (contact[key]) {
+          contactString += '<li>' + '<strong>' + key + ':</strong>' +
+           contact[key] + '</li>';
+        }
+      }
+
+      contactString += '</ul>';
+
+      return contactString;
     };
 
     /**
