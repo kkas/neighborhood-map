@@ -26,19 +26,23 @@ $(function() {
    * [ViewModel description]
    */
   var ViewModel = function() {
-    var self = this;
+    var self = this,
+      map;
 
     self.venuesList = ko.observableArray([]);
+    self.markers = ko.observableArray([]);
 
     /**
      * [addVenues description]
-     * @param {[type]} dataAry [description]
+     * @param {[type]} venuesAry [description]
      */
-    self.addVenues = function(dataAry) {
-      dataAry.forEach(function(data) {
+    self.addVenues = function(venuesAry) {
+      venuesAry.forEach(function(data) {
         // Create new venue object
         self.venuesList.push(new Venues(data));
       });
+
+      self.createMarkers(venuesAry);
     };
 
     /**
@@ -59,7 +63,25 @@ $(function() {
           center: latlng,
         };
 
-        var map = new google.maps.Map(canvas , mapOptions);
+        self.map = new google.maps.Map(canvas , mapOptions);
+      });
+    };
+
+    /**
+     * [createMarkers description]
+     * @param  {[type]} venuesAry [description]
+     * @return {[type]}           [description]
+     */
+    self.createMarkers = function(venuesAry) {
+
+      venuesAry.forEach(function(venue) {
+        var location = venue.location;
+
+        self.markers.push(new google.maps.Marker({
+          map: self.map,
+          position: new google.maps.LatLng(
+            location.lat, location.lng)
+        }));
       });
     };
 
