@@ -47,7 +47,7 @@ $(function() {
         self.venuesList.push(new Venues(data));
       });
 
-      self.createMarkers(venuesAry);
+      // self.createMarkers(venuesAry);
     };
 
     /**
@@ -167,8 +167,12 @@ $(function() {
             CLIENT_SECRET + '&v=20151030';
 
         $.getJSON(foursquareSearchAPI, function(data) {
-          // When success, create and add venues to the list.
+          // When success
+          // create and add venues to the list.
           self.addVenues(data.response.venues);
+
+          // create markers for the map from the response.
+          self.createMarkers(data.response.venues);
         }).fail(function() {
           console.log('fail');
           //TODO: add display err message to the user.
