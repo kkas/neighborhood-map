@@ -96,6 +96,7 @@ $(function() {
     self.map = undefined;
     self.currentInfoWindow = undefined;
     self.isTimerSet = false;
+    self.curAnimatingMarker = undefined;
 
     self.venueList = ko.observableArray([]);
 
@@ -270,6 +271,25 @@ $(function() {
           //TODO: add display err message to the user.
         });
       });
+    };
+
+    /**
+     * [animateClickedItem description]
+     * @param  {[type]} venue [description]
+     * @return {[type]}   [description]
+     */
+    self.animateClickedItem = function(venue) {
+      console.log('animateClickedItem() venue is:', venue);
+
+      // If any marker is animating, stop it first.
+      if (self.curAnimatingMarker !== undefined) {
+        self.curAnimatingMarker.setAnimation(null);
+      }
+
+      venue.marker.setAnimation(google.maps.Animation.BOUNCE);
+
+      // Store the marker for the next round.
+      self.curAnimatingMarker = venue.marker;
     };
 
     // Initial work

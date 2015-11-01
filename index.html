@@ -45,9 +45,11 @@ body,
             </span>
           </div> <!-- end of input-group -->
         </form>
-        <ul data-bind="foreach: filteredVenueList">
-          <li data-bind="text: name">aaa</li>
-        </ul>
+
+        <!-- This is the Bootstrap way to create "Linked items" by using <div> instead of <ul> -->
+        <div class="list-group" data-bind="foreach: filteredVenueList">
+          <a href="#" class="list-group-item" data-bind="text: name, click: $root.animateClickedItem"></a>
+        </div>
       </div>
 
       <!-- col: map container -->
