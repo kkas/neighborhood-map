@@ -80,9 +80,11 @@ $(function() {
    * [ViewModel description]
    */
   var ViewModel = function() {
-    var self = this,
-      map,
-      currentInfoWindow;
+    var self = this;
+
+    self.map = undefined;
+    self.currentInfoWindow = undefined;
+    self.isTimerSet = false;
 
     self.venueList = ko.observableArray([]);
     //TODO: check if this need to be observable.
@@ -122,6 +124,18 @@ $(function() {
         if (filterRegExp.test(self.venueList()[i].name)) {
           filteredList.push(self.venueList()[i]);
         }
+      }
+
+      // Create new markers with the new list.
+      // Avoid re-creating the same markers on each keystroke in the keyword
+      // by setting the timer.
+      if (!self.isTimerSet) {
+        setTimeout(function() {
+          self.isTimerSet = false;
+          self.createMarkers();
+        }, 1000);
+
+        self.isTimerSet = true;
       }
 
       return filteredList;
