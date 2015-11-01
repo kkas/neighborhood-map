@@ -131,8 +131,6 @@ $(function() {
         // Create new venue object
         self.venuesList.push(new Venues(data));
       });
-
-      // self.createMarkers(venuesAry);
     };
 
     /**
