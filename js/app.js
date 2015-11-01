@@ -6,10 +6,10 @@ $(function() {
     CLIENT_SECRET = 'DRK32O210T1JHBMFU1GF3PGI3GVYZXUIFADJP4NFC1JVWJXJ';
 
   /**
-   * [Venues description]
+   * [Venue description]
    * @param {[type]} data [description]
    */
-  var Venues = function(data) {
+  var Venue = function(data) {
     var self = this;
 
     //TODO: need to find a better way for this.
@@ -79,7 +79,7 @@ $(function() {
       map,
       currentInfoWindow;
 
-    self.venuesList = ko.observableArray([]);
+    self.venueList = ko.observableArray([]);
     //TODO: check if this need to be observable.
     self.markers = ko.observableArray([]);
     self.infoWindows = ko.observableArray([]);
@@ -104,18 +104,18 @@ $(function() {
     self.filteredVenueList = ko.computed(function() {
       var filterStr = self.keyword(),
         filterRegExp = new RegExp(filterStr, 'i'),
-        length = self.venuesList().length,
+        length = self.venueList().length,
         i,
         filteredList = [];
 
       // Return the full list when filterStr is empty (no filtering)
       if (!filterStr) {
-        return self.venuesList();
+        return self.venueList();
       }
 
       for (i = 0; i < length; i++) {
-        if (filterRegExp.test(self.venuesList()[i].name)) {
-          filteredList.push(self.venuesList()[i]);
+        if (filterRegExp.test(self.venueList()[i].name)) {
+          filteredList.push(self.venueList()[i]);
         }
       }
 
@@ -129,7 +129,7 @@ $(function() {
     self.addVenues = function(venuesAry) {
       venuesAry.forEach(function(data) {
         // Create new venue object
-        self.venuesList.push(new Venues(data));
+        self.venueList.push(new Venue(data));
       });
     };
 
@@ -204,15 +204,15 @@ $(function() {
     };
 
     /**
-     * [getVenuesList description]
+     * [getVenueList description]
      * @return {[type]} [description]
      */
-    self.getVenuesList = function() {
-      console.log('getVenuesList called');
+    self.getVenueList = function() {
+      console.log('getVenueList called');
 
       // Clean up the current venue list (this is mainly for the search more
       // than 2nd time)
-      self.venuesList.removeAll();
+      self.venueList.removeAll();
 
       $(function(){
         // Initial Search
@@ -245,8 +245,8 @@ $(function() {
       // Load the google map on the canvas
       self.loadGoogleMap();
 
-      // Retrieve the venues list
-      self.getVenuesList();
+      // Retrieve the venue list
+      self.getVenueList();
     };
 
     // Call the initialization
