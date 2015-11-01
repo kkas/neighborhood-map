@@ -183,7 +183,12 @@ $(function() {
       self.deleteAllMarkers();
 
       self.filteredVenueList().forEach(function(venue) {
-        var marker = new google.maps.Marker({map: self.map, position: venue.position}),
+        var marker = new google.maps.Marker(
+          {
+            map: self.map,
+            position: venue.position,
+            animation: google.maps.Animation.DROP
+          }),
           infoWindow = new google.maps.InfoWindow({
             content: venue.content
           });
