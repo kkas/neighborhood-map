@@ -37,7 +37,7 @@ $(function() {
 
     self.curVenue = ko.observable({});
 
-    self.filterKeyword = ko.observable('');
+    self.keyword = ko.observable('');
 
     /**
      * Filtered list of venues. Computed observable.
@@ -53,7 +53,7 @@ $(function() {
      * the list with all the items.
      */
     self.filteredVenueList = ko.computed(function() {
-      var filterStr = self.filterKeyword(),
+      var filterStr = self.keyword(),
         filterRegExp = new RegExp(filterStr, 'i'),
         length = self.venuesList().length,
         i,
@@ -115,6 +115,9 @@ $(function() {
      */
     self.createMarkers = function(venuesAry) {
 
+      // Clear up the marker array before adding new ones.
+      self.deleteAllMarkers();
+
       venuesAry.forEach(function(venue) {
         var location = venue.location,
           position = new google.maps.LatLng(location.lat, location.lng),
@@ -139,6 +142,23 @@ $(function() {
           self.currentInfoWindow = infoWindow;
         });
       });
+    };
+
+    /**
+     * [deleteAllMarkers description]
+     * @return {[type]} [description]
+     */
+    self.deleteAllMarkers = function() {
+      var i,
+        length = self.markers().length;
+
+      // Before deleting delete the marker from the map.
+      for (i = 0; i < length; i++) {
+        self.markers()[i].setMap(null);
+      }
+
+      // Remove everything in the array list.
+      self.markers.removeAll();
     };
 
     /**
@@ -195,12 +215,23 @@ $(function() {
      * @return {[type]} [description]
      */
     self.getVenuesList = function() {
+      console.log('getVenuesList called');
+
+      // Clean up the current venue list (this is mainly for the search more
+      // than 2nd time)
+      self.venuesList.removeAll();
+
       $(function(){
         // Initial Search
         var foursquareSearchAPI = 'https://api.foursquare.com/v2/venues/search?' +
             'll=' + initialLocation.lat + ',' + initialLocation.lng +
             '&client_id=' + CLIENT_ID + '&client_secret=' +
             CLIENT_SECRET + '&v=20151030';
+
+        // Use the keyword if any for the search.
+        if (self.keyword().length > 0) {
+          foursquareSearchAPI += '&query=' + self.keyword();
+        }
 
         $.getJSON(foursquareSearchAPI, function(data) {
           // When success
