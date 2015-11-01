@@ -10,7 +10,56 @@ $(function() {
    * @param {[type]} data [description]
    */
   var Venues = function(data) {
-    this.name = data.name;
+    var self = this;
+
+    //TODO: need to find a better way for this.
+    self.createContent = function() {
+      var content = '<div class="content">',
+        keys = [
+          'name',
+          'contact',
+          'popular',
+          'likes',
+          'shortUrl'
+        ];
+
+      keys.forEach(function(key) {
+        content += '<p>' + self[key] + '</p>';
+      });
+
+      content += '</div>';
+
+      return content;
+    };
+
+    self.createContact = function(contact) {
+      var contactString = '<ul class="list-inline">',
+        key;
+
+      for (key in contact) {
+        if (contact[key]) {
+          contactString += '<li>' + '<strong>' + key + ':</strong>' +
+           contact[key] + '</li>';
+        }
+      }
+
+      contactString += '</ul>';
+
+      return contactString;
+    };
+
+    self.name = data.name || '';
+
+    self.description = data.description || '';
+    self.contact = self.createContact(data.contact) || '';
+    self.popular = data.popular || '';
+    self.likes = data.likes || '';
+    self.shortUrl = data.shortUrl || '';
+
+    self.position = new google.maps.LatLng(
+      data.location.lat, data.location.lng);
+
+    self.content = self.createContent(self);
   };
 
   /**
@@ -110,37 +159,32 @@ $(function() {
 
     /**
      * [createMarkers description]
-     * @param  {[type]} venuesAry [description]
      * @return {[type]}           [description]
      */
-    self.createMarkers = function(venuesAry) {
-
+    self.createMarkers = function() {
       // Clear up the marker array before adding new ones.
       self.deleteAllMarkers();
 
-      venuesAry.forEach(function(venue) {
-        var location = venue.location,
-          position = new google.maps.LatLng(location.lat, location.lng),
-          marker = new google.maps.Marker({map: self.map, position: position}),
+      self.filteredVenueList().forEach(function(venue) {
+        var marker = new google.maps.Marker({map: self.map, position: venue.position}),
           infoWindow = new google.maps.InfoWindow({
-            content: self.createContent(venue)
+            content: venue.content
           });
 
-        // Add the marker.
-        self.markers.push(marker);
+          // Add the marker.
+          self.markers.push(marker);
 
-        // Open the infoWindow when the marker is clicked
-        marker.addListener('click', function(e) {
+          // Open the infoWindow when the marker is clicked
+          marker.addListener('click', function(e) {
+            infoWindow.open(self.map, marker);
 
-          infoWindow.open(self.map, marker);
+            // Only one infoWindow can be open at once.
+            if (self.currentInfoWindow !== undefined) {
+              self.currentInfoWindow.close();
+            }
 
-          // Only one infoWindow can be open at once.
-          if (self.currentInfoWindow !== undefined) {
-            self.currentInfoWindow.close();
-          }
-
-          self.currentInfoWindow = infoWindow;
-        });
+            self.currentInfoWindow = infoWindow;
+          });
       });
     };
 
@@ -159,55 +203,6 @@ $(function() {
 
       // Remove everything in the array list.
       self.markers.removeAll();
-    };
-
-    /**
-     * [createContent description]
-     * @param  {[type]} venue [description]
-     * @return {[type]}       [description]
-     */
-    //TODO: need to change?
-    self.createContent = function(venue) {
-      var venueInfo = {
-        name: venue.name || '',
-        description: venue.description || '',
-        contact: self.createContact(venue.contact) || '',
-        popular: venue.popular || '',
-        likes: venue.likes || '',
-        shortUrl: venue.shortUrl || '',
-      },
-      content = '<div class="content">',
-      key;
-
-      for (key in venueInfo) {
-        if (venueInfo) {
-          content += '<p>' + venueInfo[key] + '</p>';
-        }
-      }
-      content += '</div>';
-
-      return content;
-    };
-
-    /**
-     * [createContact description]
-     * @param  {[type]} contact [description]
-     * @return {[type]}         [description]
-     */
-    self.createContact = function(contact) {
-      var contactString = '<ul class="list-inline">',
-        key;
-
-      for (key in contact) {
-        if (contact[key]) {
-          contactString += '<li>' + '<strong>' + key + ':</strong>' +
-           contact[key] + '</li>';
-        }
-      }
-
-      contactString += '</ul>';
-
-      return contactString;
     };
 
     /**
@@ -238,8 +233,8 @@ $(function() {
           // create and add venues to the list.
           self.addVenues(data.response.venues);
 
-          // create markers for the map according to the the response
-          self.createMarkers(data.response.venues);
+          // create markers on the map
+          self.createMarkers();
         }).fail(function() {
           console.log('fail');
           //TODO: add display err message to the user.
