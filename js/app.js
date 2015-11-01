@@ -3,7 +3,16 @@ $(function() {
 
   var CLIENT_ID = 'UIIR1040LGBT4NTI3IGTRUYQY5S5WTQ12CVTPP4YAQYGYAFC',
     //TODO: Replace this secret with something else!
-    CLIENT_SECRET = 'DRK32O210T1JHBMFU1GF3PGI3GVYZXUIFADJP4NFC1JVWJXJ';
+    CLIENT_SECRET = 'DRK32O210T1JHBMFU1GF3PGI3GVYZXUIFADJP4NFC1JVWJXJ',
+
+    /**
+     * Size of an icon on the map.
+     * According to the following document, the available sizes are 32, 44, 64,
+     * and 88.
+     * https://developer.foursquare.com/docs/responses/category
+     * @type {String}
+     */
+    ICON_SIZE = '32';
 
   /**
    * [initialLocation description]
@@ -24,7 +33,8 @@ $(function() {
    * @param {[type]} data [description]
    */
   var Venue = function(data) {
-    var self = this;
+    var self = this,
+      icon = data.categories[0].icon;
 
     //TODO: need to find a better way for this.
     self.createContent = function() {
@@ -69,6 +79,7 @@ $(function() {
     self.popular = data.popular || '';
     self.likes = data.likes || '';
     self.shortUrl = data.shortUrl || '';
+    self.icon = icon.prefix + 'bg_' + ICON_SIZE + icon.suffix;
 
     self.position = new google.maps.LatLng(
       data.location.lat, data.location.lng);
@@ -187,6 +198,7 @@ $(function() {
           {
             map: self.map,
             position: venue.position,
+            icon: venue.icon,
             animation: google.maps.Animation.DROP
           }),
           infoWindow = new google.maps.InfoWindow({
