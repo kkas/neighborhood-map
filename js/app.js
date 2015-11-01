@@ -6,6 +6,20 @@ $(function() {
     CLIENT_SECRET = 'DRK32O210T1JHBMFU1GF3PGI3GVYZXUIFADJP4NFC1JVWJXJ';
 
   /**
+   * [initialLocation description]
+   * @type {Object}
+   */
+  var initialLocation = {
+    lat: 35.792621,
+    lng: 139.806513
+  };
+
+  var foursquareSearchAPI = 'https://api.foursquare.com/v2/venues/search?' +
+    'll=' + initialLocation.lat + ',' + initialLocation.lng +
+    '&client_id=' + CLIENT_ID + '&client_secret=' +
+    CLIENT_SECRET + '&v=20151030';
+
+  /**
    * [Venue description]
    * @param {[type]} data [description]
    */
@@ -60,15 +74,6 @@ $(function() {
       data.location.lat, data.location.lng);
 
     self.content = self.createContent(self);
-  };
-
-  /**
-   * [initialLocation description]
-   * @type {Object}
-   */
-  var initialLocation = {
-    lat: 35.792621,
-    lng: 139.806513
   };
 
   /**
@@ -215,12 +220,6 @@ $(function() {
       self.venueList.removeAll();
 
       $(function(){
-        // Initial Search
-        var foursquareSearchAPI = 'https://api.foursquare.com/v2/venues/search?' +
-            'll=' + initialLocation.lat + ',' + initialLocation.lng +
-            '&client_id=' + CLIENT_ID + '&client_secret=' +
-            CLIENT_SECRET + '&v=20151030';
-
         // Use the keyword if any for the search.
         if (self.keyword().length > 0) {
           foursquareSearchAPI += '&query=' + self.keyword();
