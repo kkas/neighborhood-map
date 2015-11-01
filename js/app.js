@@ -10,7 +10,7 @@ $(function() {
    * @param {[type]} data [description]
    */
   var Venues = function(data) {
-    this.name = ko.observable(data.name);
+    this.name = data.name;
   };
 
   /**
@@ -36,6 +36,42 @@ $(function() {
     self.infoWindows = ko.observableArray([]);
 
     self.curVenue = ko.observable({});
+
+    self.filterKeyword = ko.observable('');
+
+    /**
+     * Filtered list of venues. Computed observable.
+     *
+     * This list is actually bound to the list shown in the view.
+     * The filter is the text that is typed in the filter input in the view.
+     * The filter will be applied only if the filter is not empty.
+     * The filter works by case-insensitive.
+     *
+     * @param  {function} function
+     * @return {Array} an array list of venues that contains ones that contain
+     * the string of filtering word. If no filter is applied, it simply returns
+     * the list with all the items.
+     */
+    self.filteredVenueList = ko.computed(function() {
+      var filterStr = self.filterKeyword(),
+        filterRegExp = new RegExp(filterStr, 'i'),
+        length = self.venuesList().length,
+        i,
+        filteredList = [];
+
+      // Return the full list when filterStr is empty (no filtering)
+      if (!filterStr) {
+        return self.venuesList();
+      }
+
+      for (i = 0; i < length; i++) {
+        if (filterRegExp.test(self.venuesList()[i].name)) {
+          filteredList.push(self.venuesList()[i]);
+        }
+      }
+
+      return filteredList;
+    }, self);
 
     /**
      * [addVenues description]
@@ -171,7 +207,7 @@ $(function() {
           // create and add venues to the list.
           self.addVenues(data.response.venues);
 
-          // create markers for the map from the response.
+          // create markers for the map according to the the response
           self.createMarkers(data.response.venues);
         }).fail(function() {
           console.log('fail');

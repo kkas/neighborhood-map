@@ -38,10 +38,10 @@ body,
       <!-- TODO: size -->
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 menu sidebar-offcanvas">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Filter" aria-describedby="basic-addon2">
+          <input type="text" class="form-control" placeholder="Filter" aria-describedby="basic-addon2" data-bind="textInput: filterKeyword">
           <span class="input-group-addon" id="basic-addon2">Filter <span class="glyphicon glyphicon-filter" aria-hidden="true"></span></span>
         </div>
-        <ul data-bind="foreach: venuesList">
+        <ul data-bind="foreach: filteredVenueList">
           <li data-bind="text: name">aaa</li>
         </ul>
       </div>
