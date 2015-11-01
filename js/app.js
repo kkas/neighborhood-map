@@ -83,7 +83,7 @@ $(function() {
 
     self.position = new google.maps.LatLng(
       data.location.lat, data.location.lng);
-
+    self.marker = undefined;
     self.content = self.createContent(self);
   };
 
@@ -98,8 +98,8 @@ $(function() {
     self.isTimerSet = false;
 
     self.venueList = ko.observableArray([]);
+
     //TODO: check if this need to be observable.
-    self.markers = ko.observableArray([]);
     self.infoWindows = ko.observableArray([]);
 
     self.curVenue = ko.observable({});
@@ -190,8 +190,9 @@ $(function() {
      * @return {[type]}           [description]
      */
     self.createMarkers = function() {
-      // Clear up the marker array before adding new ones.
-      self.deleteAllMarkers();
+
+      // Remove all the markers before placing new ones.
+      self.removeAllMarkers();
 
       self.filteredVenueList().forEach(function(venue) {
         var marker = new google.maps.Marker(
@@ -205,8 +206,8 @@ $(function() {
             content: venue.content
           });
 
-          // Add the marker.
-          self.markers.push(marker);
+          // Set the marker to the current venue object.
+          venue.marker = marker;
 
           // Open the infoWindow when the marker is clicked
           marker.addListener('click', function(e) {
@@ -223,20 +224,21 @@ $(function() {
     };
 
     /**
-     * [deleteAllMarkers description]
+     * [removeAllMarkers description]
      * @return {[type]} [description]
      */
-    self.deleteAllMarkers = function() {
+    self.removeAllMarkers = function() {
       var i,
-        length = self.markers().length;
+        length = self.venueList().length,
+        marker;
 
       // Before deleting delete the marker from the map.
       for (i = 0; i < length; i++) {
-        self.markers()[i].setMap(null);
+        marker = self.venueList()[i].marker;
+        if (marker !== undefined) {
+          self.venueList()[i].marker.setMap(null);
+        }
       }
-
-      // Remove everything in the array list.
-      self.markers.removeAll();
     };
 
     /**
