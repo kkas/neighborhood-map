@@ -257,29 +257,26 @@ myApp.main = function() {
      * @return {[type]} [description]
      */
     self.getVenueList = function() {
-      console.log('getVenueList called');
 
       // Clean up the current venue list (this is mainly for the search more
       // than 2nd time)
       self.venueList.removeAll();
 
-      $(function(){
-        // Use the keyword if any for the search.
-        if (self.keyword().length > 0) {
-          foursquareSearchAPI += '&query=' + self.keyword();
-        }
+      // Use the keyword if any for the search.
+      if (self.keyword().length > 0) {
+        foursquareSearchAPI += '&query=' + self.keyword();
+      }
 
-        $.getJSON(foursquareSearchAPI, function(data) {
-          // When success
-          // create and add venues to the list.
-          self.addVenues(data.response.venues);
+      $.getJSON(foursquareSearchAPI, function(data) {
+        // When success
+        // create and add venues to the list.
+        self.addVenues(data.response.venues);
 
-          // create markers on the map
-          self.createMarkers();
-        }).fail(function() {
-          console.log('fail');
-          //TODO: add display err message to the user.
-        });
+        // create markers on the map
+        self.createMarkers();
+      }).fail(function() {
+        console.log('fail');
+        //TODO: add display err message to the user.
       });
     };
 
