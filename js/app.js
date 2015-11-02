@@ -44,7 +44,8 @@ myApp.main = function() {
    */
   var Venue = function(data) {
     var self = this,
-      icon = data.categories[0].icon;
+    categories = data.categories,
+    icon;
 
     //TODO: need to find a better way for this.
     self.createContent = function() {
@@ -89,7 +90,15 @@ myApp.main = function() {
     self.popular = data.popular || '';
     self.likes = data.likes || '';
     self.shortUrl = data.shortUrl || '';
-    self.icon = icon.prefix + 'bg_' + ICON_SIZE + icon.suffix;
+    // categories can be empty.
+    // https://developer.foursquare.com/docs/responses/venue
+    if (categories.length > 0) {
+      icon = categories[0].icon;
+      self.icon = icon.prefix + 'bg_' + ICON_SIZE + icon.suffix;
+    } else {
+      // Use the default google map icon if the categories array is empty.
+      self.icon = undefined;
+    }
 
     self.position = new google.maps.LatLng(
       data.location.lat, data.location.lng);
