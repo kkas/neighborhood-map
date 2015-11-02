@@ -29,8 +29,8 @@ myApp.main = function() {
    * @type {Object}
    */
   var initialLocation = {
-    lat: 35.792621,
-    lng: 139.806513
+    lat: 37.7749300,
+    lng: -122.4194200
   };
 
   var foursquareSearchAPI = 'https://api.foursquare.com/v2/venues/search?' +
@@ -237,7 +237,7 @@ myApp.main = function() {
         initialLocation.lat, initialLocation.lng);
 
       var mapOptions = {
-        zoom: 15,
+        zoom: 18,
         center: latlng,
       };
 
