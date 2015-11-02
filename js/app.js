@@ -39,6 +39,19 @@ myApp.main = function() {
     CLIENT_SECRET + '&v=20151030';
 
   /**
+   * [ErrorModel description]
+   */
+  var ErrorModel = function() {
+    var self = this;
+
+    self.errorMessage = ko.observable('');
+
+    self.displayErrorMessage = ko.computed(function() {
+      return self.errorMessage ? true : false;
+    }, self);
+  };
+
+  /**
    * [Venue description]
    * @param {[type]} data [description]
    */
@@ -111,6 +124,8 @@ myApp.main = function() {
    */
   var ViewModel = function() {
     var self = this;
+
+    self.errorHandler = ko.observable(new ErrorModel());
 
     self.map = undefined;
     self.currentInfoWindow = undefined;
@@ -262,6 +277,18 @@ myApp.main = function() {
     };
 
     /**
+     * Reset the list that is displayed on the screen.
+     * @return {undefined}
+     */
+    self.resetListView = function() {
+      // Clean up all the items on the screen.
+      self.venueList.removeAll();
+
+      // Set an empty string to remove any error messages.
+      self.errorHandler().errorMessage('');
+    };
+
+    /**
      * [getVenueList description]
      * @return {[type]} [description]
      */
@@ -269,7 +296,7 @@ myApp.main = function() {
 
       // Clean up the current venue list (this is mainly for the search more
       // than 2nd time)
-      self.venueList.removeAll();
+      self.resetListView();
 
       // Use the keyword if any for the search.
       if (self.keyword().length > 0) {
@@ -284,8 +311,9 @@ myApp.main = function() {
         // create markers on the map
         self.createMarkers();
       }).fail(function() {
-        console.log('fail');
-        //TODO: add display err message to the user.
+        var ERROR_MSG = 'Failed to get response from FourSquare Search';
+
+        self.errorHandler().errorMessage(ERROR_MSG);
       });
     };
 
