@@ -133,12 +133,6 @@ myApp.main = function() {
     self.curAnimatingMarker = undefined;
 
     self.venueList = ko.observableArray([]);
-
-    //TODO: check if this need to be observable.
-    self.infoWindows = ko.observableArray([]);
-
-    self.curVenue = ko.observable({});
-
     self.keyword = ko.observable('');
 
     /**
