@@ -231,22 +231,17 @@ myApp.main = function() {
      * @return {undefined}
      */
     self.loadGoogleMap = function() {
-      // TODO:
-      // Load after the DOM has been loaded completely.
-      $(function(){
-        var canvas = document.getElementById('map-canvas');
+      var canvas = document.getElementById('map-canvas');
 
-        //TODO: add dynamic lat and lng values
-        var latlng = new google.maps.LatLng(
-          initialLocation.lat, initialLocation.lng);
+      var latlng = new google.maps.LatLng(
+        initialLocation.lat, initialLocation.lng);
 
-        var mapOptions = {
-          zoom: 15,
-          center: latlng,
-        };
+      var mapOptions = {
+        zoom: 15,
+        center: latlng,
+      };
 
-        self.map = new google.maps.Map(canvas , mapOptions);
-      });
+      self.map = new google.maps.Map(canvas , mapOptions);
     };
 
     /**
