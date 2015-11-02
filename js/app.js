@@ -285,14 +285,17 @@ myApp.main = function() {
 
     /**
      * Remove all the markers from the map.
-     * @return {[type]} [description]
+     * @return {undefined}
      */
     self.removeAllMarkers = function() {
       var i,
         length = self.venueList().length,
         marker;
 
-      //TODO:
+      /*
+       * Use master list here so that we can remove all the markers even
+       * after the search filtering is applied.
+       */
       for (i = 0; i < length; i++) {
         marker = self.venueList()[i].marker;
         if (marker !== undefined) {
