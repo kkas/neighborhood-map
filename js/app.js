@@ -1,4 +1,14 @@
-$(function() {
+// This file depends on jQuery. So, load it beforehand.
+
+// Global variable.
+var myApp = myApp || {};
+
+/**
+ * Main function of this application.
+ * Called when the google map api is successfully load.
+ * @return {undefined}
+ */
+myApp.main = function() {
   'use strict';
 
   var CLIENT_ID = 'UIIR1040LGBT4NTI3IGTRUYQY5S5WTQ12CVTPP4YAQYGYAFC',
@@ -306,4 +316,4 @@ $(function() {
   };
 
   ko.applyBindings(new ViewModel());
-});
+};
