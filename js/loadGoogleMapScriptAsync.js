@@ -20,5 +20,15 @@ var myApp = myApp || {};
 
   // Call the google map API async.
   // Documentation: https://api.jquery.com/jquery.getscript/
-  $.getScript(URL);
+  $.getScript(URL)
+    .fail(function() {
+      var ERR_MSG = 'Failed to load the map.';
+
+      // This turn on the error message in the view.
+      // The reason that I use jQuery, instead of knockoutjs, is that
+      // the main application is not yet executed at this point so that I can't
+      // refer to the view in knockoutjs.
+      $('.error').removeClass("hidden");
+      $('#err-msg').text(ERR_MSG);
+    });
 })(myApp);

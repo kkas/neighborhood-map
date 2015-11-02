@@ -12,4 +12,7 @@ body {
 .content {
   color: #000; }
 
+.error > h2 {
+  color: #f00; }
+
 /*# sourceMappingURL=style.css.map */
