@@ -39,7 +39,8 @@ myApp.main = function() {
     CLIENT_SECRET + '&v=20151030';
 
   /**
-   * [ErrorModel description]
+   * Model that contains things that are related to handling
+   * errors. This is currently used for Foursquare Search API.
    */
   var ErrorModel = function() {
     var self = this;
@@ -52,17 +53,23 @@ myApp.main = function() {
   };
 
   /**
-   * [Venue description]
+   * Model that contains
    * @param {[type]} data [description]
    */
-  var Venue = function(data) {
+  var VenueModel = function(data) {
     var self = this,
     categories = data.categories,
     icon;
 
     //TODO: need to find a better way for this.
-    self.createContent = function() {
-      var content = '<div class="content">',
+    /**
+     * Creates a content that will be displayed in a
+     * infoWindow.
+     * @return {String} string that contains the HTML to be
+     * used in the infoWindow.
+     */
+    self.createInfoWindowContent = function() {
+      var infoWindowContentHTML = '<div class="content">',
         keys = [
           'name',
           'contact',
@@ -72,32 +79,43 @@ myApp.main = function() {
         ];
 
       keys.forEach(function(key) {
-        content += '<p>' + self[key] + '</p>';
+        infoWindowContentHTML += '<p>' + self[key] + '</p>';
       });
 
-      content += '</div>';
+      infoWindowContentHTML += '</div>';
 
-      return content;
+      return infoWindowContentHTML;
     };
 
+    /**
+     * Create a contact that will be displayed in a infoWindow.
+     * @param  {Object} contact  Object that is returned from the API and
+     * contains contact info
+     * @return {String} string that contains the HTML to be used in the
+     * infoWindow.
+     */
     self.createContact = function(contact) {
-      var contactString = '<ul class="list-inline">',
+      var contactHTML = '<ul class="list-inline">',
         key;
 
       for (key in contact) {
         if (contact[key]) {
-          contactString += '<li>' + '<strong>' + key + ':</strong>' +
+          contactHTML += '<li>' + '<strong>' + key + ':</strong>' +
            contact[key] + '</li>';
         }
       }
 
-      contactString += '</ul>';
+      contactHTML += '</ul>';
 
-      return contactString;
+      return contactHTML;
     };
 
+    /*
+     * -----------------------
+     * Properties for venue
+     * -----------------------
+     */
     self.name = data.name || '';
-
     self.description = data.description || '';
     self.contact = self.createContact(data.contact) || '';
     self.popular = data.popular || '';
@@ -113,25 +131,37 @@ myApp.main = function() {
       self.icon = undefined;
     }
 
+    /*
+     * -----------------------
+     * Properties for map
+     * -----------------------
+     */
     self.position = new google.maps.LatLng(
       data.location.lat, data.location.lng);
     self.marker = undefined;
-    self.content = self.createContent(self);
-  };
+    self.infoWindowContent = self.createInfoWindowContent(self);
+  }; // end of VenueModel
 
   /**
-   * [ViewModel description]
+   * ViewModel of this application.
    */
   var ViewModel = function() {
     var self = this;
 
+    /*
+     * Properties for error handling
+     */
     self.errorHandler = ko.observable(new ErrorModel());
 
+    /*
+     * Properties for map.
+     */
     self.map = undefined;
     self.currentInfoWindow = undefined;
     self.isTimerSet = false;
     self.curAnimatingMarker = undefined;
 
+    // list that holds all the items (master list)
     self.venueList = ko.observableArray([]);
     self.keyword = ko.observable('');
 
@@ -166,9 +196,11 @@ myApp.main = function() {
         }
       }
 
-      // Create new markers with the new list.
-      // Avoid re-creating the same markers on each keystroke in the keyword
-      // by setting the timer.
+      /*
+       * Create new markers with the new list.
+       * Avoid re-creating the same markers on each keystroke in the keyword
+       * by setting the timer.
+       */
       if (!self.isTimerSet) {
         setTimeout(function() {
           self.isTimerSet = false;
@@ -182,21 +214,24 @@ myApp.main = function() {
     }, self);
 
     /**
-     * [addVenues description]
+     * Add venues to the venueList.
+     * This sets the master venue item list.
      * @param {[type]} venuesAry [description]
+     * @return {undefined}
      */
     self.addVenues = function(venuesAry) {
       venuesAry.forEach(function(data) {
         // Create new venue object
-        self.venueList.push(new Venue(data));
+        self.venueList.push(new VenueModel(data));
       });
     };
 
     /**
-     * [loadGoogleMap description]
-     * @return {[type]} [description]
+     * Load the map on the screen.
+     * @return {undefined}
      */
     self.loadGoogleMap = function() {
+      // TODO:
       // Load after the DOM has been loaded completely.
       $(function(){
         var canvas = document.getElementById('map-canvas');
@@ -215,14 +250,15 @@ myApp.main = function() {
     };
 
     /**
-     * [createMarkers description]
-     * @return {[type]}           [description]
+     * Create makers on the map with infoWindows on each marker.
+     * @return {undefined}
      */
     self.createMarkers = function() {
 
       // Remove all the markers before placing new ones.
       self.removeAllMarkers();
 
+      // Create the markers based on the filtered list (not the master list).
       self.filteredVenueList().forEach(function(venue) {
         var marker = new google.maps.Marker(
           {
@@ -232,7 +268,7 @@ myApp.main = function() {
             animation: google.maps.Animation.DROP
           }),
           infoWindow = new google.maps.InfoWindow({
-            content: venue.content
+            content: venue.infoWindowContent
           });
 
           // Set the marker to the current venue object.
@@ -253,7 +289,7 @@ myApp.main = function() {
     };
 
     /**
-     * [removeAllMarkers description]
+     * Remove all the markers from the map.
      * @return {[type]} [description]
      */
     self.removeAllMarkers = function() {
@@ -261,7 +297,7 @@ myApp.main = function() {
         length = self.venueList().length,
         marker;
 
-      // Before deleting delete the marker from the map.
+      //TODO:
       for (i = 0; i < length; i++) {
         marker = self.venueList()[i].marker;
         if (marker !== undefined) {
@@ -271,7 +307,7 @@ myApp.main = function() {
     };
 
     /**
-     * Reset the list that is displayed on the screen.
+     * Reset the list on the screen.
      * @return {undefined}
      */
     self.resetListView = function() {
@@ -283,11 +319,13 @@ myApp.main = function() {
     };
 
     /**
-     * [getVenueList description]
-     * @return {[type]} [description]
+     * Call the API to retrieve items based on the keyword that is typed in
+     * from the user.
+     *
+     * Currently, FourSquare Search API is used.
+     * @return {undefined}
      */
     self.getVenueList = function() {
-
       // Clean up the current venue list (this is mainly for the search more
       // than 2nd time)
       self.resetListView();
@@ -298,7 +336,6 @@ myApp.main = function() {
       }
 
       $.getJSON(foursquareSearchAPI, function(data) {
-        // When success
         // create and add venues to the list.
         self.addVenues(data.response.venues);
 
@@ -312,13 +349,11 @@ myApp.main = function() {
     };
 
     /**
-     * [animateClickedItem description]
-     * @param  {[type]} venue [description]
-     * @return {[type]}   [description]
+     * Set the bouncing animation to the marker that is clicked.
+     * @param  {Observable} venue venue item on which the user just clicked.
+     * @return {undefined}
      */
     self.animateClickedItem = function(venue) {
-      console.log('animateClickedItem() venue is:', venue);
-
       // If any marker is animating, stop it first.
       if (self.curAnimatingMarker !== undefined) {
         self.curAnimatingMarker.setAnimation(null);
