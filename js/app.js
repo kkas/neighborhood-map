@@ -61,10 +61,10 @@ myApp.main = function() {
     categories = data.categories,
     icon;
 
-    //TODO: need to find a better way for this.
     /**
      * Creates a content that will be displayed in a
      * infoWindow.
+     *
      * @return {String} string that contains the HTML to be
      * used in the infoWindow.
      */
@@ -121,8 +121,11 @@ myApp.main = function() {
     self.popular = data.popular || '';
     self.likes = data.likes || '';
     self.shortUrl = data.shortUrl || '';
-    // categories can be empty.
-    // https://developer.foursquare.com/docs/responses/venue
+
+    /*
+     * categories can be empty. See the doc for this for more info.
+     * https://developer.foursquare.com/docs/responses/venue
+     */
     if (categories.length > 0) {
       icon = categories[0].icon;
       self.icon = icon.prefix + 'bg_' + ICON_SIZE + icon.suffix;
