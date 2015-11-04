@@ -11,10 +11,10 @@ var myApp = myApp || {};
   app.ErrorModel = function() {
     var self = this;
 
-    self.errorMessage = ko.observable('');
-
+    self.error = ko.observable(false);
+    self.errorMessage = 'Failed to get response from FourSquare Search';
     self.displayErrorMessage = ko.computed(function() {
-      return self.errorMessage ? true : false;
+      return self.error();
     });
   };
 

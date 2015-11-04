@@ -214,8 +214,8 @@ myApp.main = function() {
       // Clean up all the items on the screen.
       self.venueList.removeAll();
 
-      // Set an empty string to remove any error messages.
-      self.errorHandler.errorMessage('');
+      // Reset the error flag.
+      self.errorHandler.error(false);
     };
 
     /**
@@ -242,9 +242,7 @@ myApp.main = function() {
         // create markers on the map
         self.createMarkers();
       }).fail(function() {
-        var ERROR_MSG = 'Failed to get response from FourSquare Search';
-
-        self.errorHandler.errorMessage(ERROR_MSG);
+        self.errorHandler.error(true);
       });
     };
 
