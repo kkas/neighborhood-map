@@ -38,6 +38,10 @@ myApp.main = function() {
     '&client_id=' + CLIENT_ID + '&client_secret=' +
     CLIENT_SECRET + '&v=20151030';
 
+  var WIKIPEDIA_API_BASE ='https://en.wikipedia.org//w/api.php' +
+      '?action=query&prop=extracts&format=json&exintro=' +
+      '&titles=San%20Francisco&callback=?';
+
   /**
    * Model that contains things that are related to handling
    * errors. This is currently used for Foursquare Search API.
@@ -155,6 +159,11 @@ myApp.main = function() {
      * Properties for error handling
      */
     self.errorHandler = ko.observable(new ErrorModel());
+
+    /*
+     * Properties for wikipedia section.
+     */
+    self.wikipedia = ko.observable(new myApp.WikipediaModel());
 
     /*
      * Properties for map.
@@ -366,10 +375,40 @@ myApp.main = function() {
       self.curAnimatingMarker = venue.marker;
     };
 
+    /**
+     * Call the wikipedia API and set the content if success.
+     * @return {undefined}
+     */
+    self.getWikipediaContent = function() {
+      $.getJSON(WIKIPEDIA_API_BASE, function(data) {
+        // Set the content
+        self.setWikipediaResult(data);
+      }).fail(function() {
+        console.log('failed wikipedia');
+        self.wikipedia().error(true);
+      });
+    };
+
+    /**
+     * Set the content for the wikipedia result.
+     * @return {undefined}
+     */
+    self.setWikipediaResult = function(data) {
+      var pages = data.query.pages,
+        pageid = Object.keys(pages)[0];
+
+      self.wikipedia().pageid(pageid);
+      self.wikipedia().content(pages[pageid].extract);
+      self.wikipedia().title(pages[pageid].title);
+    };
+
     // Initial work
     self.init = function() {
       // Load the google map on the canvas
       self.loadGoogleMap();
+
+      // Retrieve the wikipedia content
+      self.getWikipediaContent();
 
       // Retrieve the venue list
       self.getVenueList();

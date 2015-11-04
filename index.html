@@ -25,10 +25,12 @@
     </div>
 
     <!-- Placeholder for Wikipedia -->
-    <div class="wiki">
+    <div class="wiki" data-bind="with: wikipedia">
       <h3>About San Fransisco</h3>
-      <div class="wiki-content">
-        <p>My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!</p>
+      <div class="wiki-content" data-bind="html: content">
+      </div>
+      <div data-bind="if: showError">
+        <p class="error" data-bind="text: errorMsg"></p>
       </div>
     </div>
 
@@ -85,6 +87,7 @@
   </script>
 
   <script src="bower_components/knockout/dist/knockout.js"></script>
+  <script src="js/wikipediaModel.js"></script>
   <script src="js/app.js"></script>
   <script src="js/loadGoogleMapScriptAsync.js"></script>
 </body>
