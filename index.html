@@ -14,6 +14,7 @@
   <title>My Neighborhood Map</title>
 </head>
 <body>
+  <!-- This is controlled by the jQuery script, not the knockoutjs framework -->
   <div class="error hidden">
     <h2>ERROR!</h2>
     <p>Cause: <span id="err-msg"></span></p>
@@ -71,11 +72,9 @@
     </div>
 
     <div class="map-embed">
-      <!-- TODO: -->
       <div id="map-canvas" class="map-canvas"></div>
     </div>
   </main>
-
 
   <!-- Critical JavaScripts -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -87,6 +86,7 @@
   </script>
 
   <script src="bower_components/knockout/dist/knockout.js"></script>
+
   <script src="js/wikipediaModel.js"></script>
   <script src="js/app.js"></script>
   <script src="js/loadGoogleMapScriptAsync.js"></script>
