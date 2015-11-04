@@ -117,7 +117,9 @@ myApp.main = function() {
     /**
      * Add venues to the venueList.
      * This sets the master venue item list.
-     * @param {[type]} venuesAry [description]
+     *
+     * Then, save all the items into the local storage.
+     * @param {Array} venuesAry array that contains venue data.
      * @return {undefined}
      */
     self.addVenues = function(venuesAry) {
@@ -125,6 +127,10 @@ myApp.main = function() {
         // Create new venue object
         self.venueList.push(new myApp.VenueModel(data));
       });
+
+      // Save the new list to the local storage
+      window.localStorage.setItem(config.localStorageItem,
+        ko.toJSON(self.venueList));
     };
 
     /**
@@ -290,6 +296,55 @@ myApp.main = function() {
       self.wikipedia.title(pages[pageid].title);
     };
 
+    /**
+     * Restore the saved data into the master list.
+     * @param {Array} dataAry an array that contains saved data
+     * @return {undefined}
+     */
+    self.restoreSavedData = function(dataAry) {
+      var i, length = dataAry.length;
+
+      for (i = 0; i < length; i++) {
+        self.venueList.push(new myApp.VenueModel({
+          name: dataAry[i].name,
+          description: dataAry[i].description,
+          contact: dataAry[i].contact,
+          popular: dataAry[i].popular,
+          likes: dataAry[i].likes,
+          shortUrl: dataAry[i].shortUrl,
+          location: dataAry[i].location,
+          icon: dataAry[i].icon,
+          position: dataAry[i].position,
+          // marker: dataAry[i].marker,
+          infoWindowContent: dataAry[i].infoWindowContent,
+          categories: dataAry[i].categories,
+        }));
+      }
+    };
+
+    /**
+     * Initialize the item list.
+     * If saved data is found in the local storage, restore them.
+     * Otherwise, make the API call and create the list.
+     * @return {undefined}
+     */
+    self.initializeList = function() {
+      // contains null when the data has not been found.
+      var storedData = window.localStorage.getItem(config.localStorageItem);
+
+      if(storedData === null) {
+        // Call the API for the items
+        self.getVenueList();
+        return;
+      }
+
+      // Restore the saved data
+      self.restoreSavedData(JSON.parse(storedData));
+
+      // Create markers
+      self.createMarkers();
+    };
+
     // Initial work
     self.init = function() {
       // Load the google map on the canvas
@@ -298,8 +353,8 @@ myApp.main = function() {
       // Retrieve the wikipedia content
       self.getWikipediaContent();
 
-      // Retrieve the venue list
-      self.getVenueList();
+      // Initialize the venue list
+      self.initializeList();
     };
 
     // Call the initialization

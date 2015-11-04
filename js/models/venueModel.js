@@ -32,7 +32,7 @@ var myApp = myApp || {};
       var infoWindowContentHTML = '<div class="content">',
         keys = [
           'name',
-          'contact',
+          'contactHTML',
           'popular',
           'likes',
           'shortUrl'
@@ -77,10 +77,13 @@ var myApp = myApp || {};
      */
     self.name = data.name || '';
     self.description = data.description || '';
-    self.contact = self.createContact(data.contact) || '';
+    self.contact = data.contact || '';
+    self.contactHTML = self.createContact(self.contact) || '';
     self.popular = data.popular || '';
     self.likes = data.likes || '';
     self.shortUrl = data.shortUrl || '';
+    self.location = data.location || '';
+    self.categories = data.categories || [];
 
     /*
      * categories can be empty. See the doc for this for more info.
@@ -100,7 +103,7 @@ var myApp = myApp || {};
      * -----------------------
      */
     self.position = new google.maps.LatLng(
-      data.location.lat, data.location.lng);
+      self.location.lat, self.location.lng);
     self.marker = undefined;
     self.infoWindowContent = self.createInfoWindowContent(self);
   }; // end of VenueModel
