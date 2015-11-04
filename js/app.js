@@ -272,7 +272,6 @@ myApp.main = function() {
             map: self.map,
             position: venue.position,
             icon: venue.icon,
-            animation: google.maps.Animation.DROP
           }),
           infoWindow = new google.maps.InfoWindow({
             content: venue.infoWindowContent
