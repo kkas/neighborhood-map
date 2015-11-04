@@ -18,7 +18,7 @@ var myApp = myApp || {};
     self.title = ko.observable('San Francisco');
 
     self.error = ko.observable(false);
-    self.errorMsg = "Currently Not Available. Try Again Later.";
+    self.errorMsg = 'Currently Not Available. Try Again Later.';
     self.showError = ko.computed(function() {
       return self.error();
     }, this);

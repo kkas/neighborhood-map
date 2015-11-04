@@ -28,7 +28,7 @@ var myApp = myApp || {};
       // The reason that I use jQuery, instead of knockoutjs, is that
       // the main application is not yet executed at this point so that I can't
       // refer to the view in knockoutjs.
-      $('.error').removeClass("hidden");
+      $('.error').removeClass('hidden');
       $('#err-msg').text(ERR_MSG);
     });
 })(myApp);
