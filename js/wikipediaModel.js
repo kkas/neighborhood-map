@@ -15,7 +15,7 @@ var myApp = myApp || {};
 
     self.pageid = ko.observable('');
     self.content = ko.observable('');
-    self.title = ko.observable('');
+    self.title = ko.observable('San Francisco');
 
     self.error = ko.observable(false);
     self.errorMsg = "Currently Not Available. Try Again Later.";

@@ -27,7 +27,7 @@
 
     <!-- Placeholder for Wikipedia -->
     <div class="wiki" data-bind="with: wikipedia">
-      <h3>About San Fransisco</h3>
+      <h3>About <span data-bind="text: title"></span></h3>
       <div class="wiki-content" data-bind="html: content">
       </div>
       <div data-bind="if: showError">
