@@ -21,7 +21,7 @@ var myApp = myApp || {};
     self.errorMsg = 'Currently Not Available. Try Again Later.';
     self.showError = ko.computed(function() {
       return self.error();
-    }, this);
+    });
   };
 
 })(myApp);

@@ -47,7 +47,7 @@ myApp.main = function() {
     /*
      * Properties for wikipedia section.
      */
-    self.wikipedia = ko.observable(new myApp.WikipediaModel());
+    self.wikipedia = new myApp.WikipediaModel();
 
     /*
      * Properties for navigation menu.
@@ -275,7 +275,7 @@ myApp.main = function() {
         self.setWikipediaResult(data);
       }).fail(function() {
         console.log('failed wikipedia');
-        self.wikipedia().error(true);
+        self.wikipedia.error(true);
       });
     };
 
@@ -287,9 +287,9 @@ myApp.main = function() {
       var pages = data.query.pages,
         pageid = Object.keys(pages)[0];
 
-      self.wikipedia().pageid(pageid);
-      self.wikipedia().content(pages[pageid].extract);
-      self.wikipedia().title(pages[pageid].title);
+      self.wikipedia.pageid(pageid);
+      self.wikipedia.content(pages[pageid].extract);
+      self.wikipedia.title(pages[pageid].title);
     };
 
     // Initial work
