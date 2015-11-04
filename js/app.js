@@ -50,6 +50,11 @@ myApp.main = function() {
     self.wikipedia = ko.observable(new myApp.WikipediaModel());
 
     /*
+     * Properties for navigation menu.
+     */
+    self.nav = new myApp.NavigationModel();
+
+    /*
      * Properties for map.
      */
     self.map = undefined;

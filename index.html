@@ -20,7 +20,8 @@
     <p>Cause: <span id="err-msg"></span></p>
   </div>
 
-  <nav id="drawer">
+  <!-- 'open' class will be applied when nav.menuShown in true -->
+  <nav id="drawer" data-bind="css: {open: nav.menuShown}">
     <div class="app-name">
       <h2>My Neighborhood Map</h2>
     </div>
@@ -63,11 +64,12 @@
     </div>
   </nav>
 
-  <main>
+  <!-- 'shifted' class will be applied when nav.menuShown in true -->
+  <main data-bind="css: {shifted: nav.menuShown}">
     <div class="control-bar">
       <div class='btn-wrap'>
         <!-- Toggle Menu Button -->
-        <a href="#" class="btn btn-default btn-lg nav-toggle" role="button"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+        <a href="#" class="btn btn-default btn-lg nav-toggle" role="button" data-bind="click: nav.toggleNavMenu"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
       </div>
     </div>
 
@@ -78,17 +80,11 @@
 
   <!-- Critical JavaScripts -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script>
-  $(document).ready(function() {
-    // Add the click event listener to toggle the navigation bar on the left
-    $('.nav-toggle').click(function() {$('#drawer').toggleClass('open'); $('main').toggleClass('shifted');});
-  });
-  </script>
-
   <script src="bower_components/knockout/dist/knockout.js"></script>
 
   <script src="js/models/venueModel.js"></script>
   <script src="js/models/errorModel.js"></script>
+  <script src="js/models/navigationModel.js"></script>
   <script src="js/models/wikipediaModel.js"></script>
   <script src="js/app.js"></script>
   <script src="js/loadGoogleMapScriptAsync.js"></script>
