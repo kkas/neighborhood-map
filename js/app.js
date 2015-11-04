@@ -251,7 +251,7 @@ myApp.main = function() {
 
     /**
      * Set the bouncing animation to the marker that is clicked.
-     * @param  {Observable} venue venue item on which the user just clicked.
+     * @param  {venueViewModel} venue venue item on which the user just clicked.
      * @return {undefined}
      */
     self.animateClickedItem = function(venue) {
