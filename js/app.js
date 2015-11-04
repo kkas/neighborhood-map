@@ -11,9 +11,7 @@ var myApp = myApp || {};
 myApp.main = function() {
   'use strict';
 
-  var CLIENT_ID = 'UIIR1040LGBT4NTI3IGTRUYQY5S5WTQ12CVTPP4YAQYGYAFC',
-    //TODO: Replace this secret with something else!
-    CLIENT_SECRET = 'DRK32O210T1JHBMFU1GF3PGI3GVYZXUIFADJP4NFC1JVWJXJ';
+  var config = myApp.config;
 
   /**
    * [initialLocation description]
@@ -26,8 +24,8 @@ myApp.main = function() {
 
   var foursquareSearchAPI = 'https://api.foursquare.com/v2/venues/search?' +
     'll=' + initialLocation.lat + ',' + initialLocation.lng +
-    '&client_id=' + CLIENT_ID + '&client_secret=' +
-    CLIENT_SECRET + '&v=20151030';
+    '&client_id=' + config.CLIENT_ID + '&client_secret=' +
+    config.CLIENT_SECRET + '&v=20151030';
 
   var WIKIPEDIA_API_BASE ='https://en.wikipedia.org//w/api.php' +
       '?action=query&prop=extracts&format=json&exintro=' +
