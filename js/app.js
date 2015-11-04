@@ -212,6 +212,8 @@ myApp.main = function() {
        * Create new markers with the new list.
        * Avoid re-creating the same markers on each keystroke in the keyword
        * by setting the timer.
+       *
+       * This will also prevent not showing correct items when typing too fast.
        */
       if (!self.isTimerSet) {
         setTimeout(function() {
