@@ -178,7 +178,10 @@ myApp.main = function() {
             infoWindow.open(self.map, marker);
 
             // Only one infoWindow can be open at once.
-            if (self.currentInfoWindow !== undefined) {
+            // If the current InfoWindow and infoWindow are the same,
+            // meaning the same marker is clicked in a row, do not close it.
+            if ( self.currentInfoWindow !== infoWindow &&
+              self.currentInfoWindow !== undefined) {
               self.currentInfoWindow.close();
             }
 
