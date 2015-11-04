@@ -23,6 +23,7 @@ body {
 
 main.shifted {
  transform: translate($nav-width, 0);
+ transition: transform 0.3s ease;
 }
 
 /** Ordinary Desktop or larger */
@@ -64,6 +65,7 @@ nav {
   nav {
     // Do not hide the menu
     transform: translate(0, 0);
+    transition: transform 0.3s ease;
   }
 }
 
