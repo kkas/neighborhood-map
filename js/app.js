@@ -42,7 +42,7 @@ myApp.main = function() {
     /*
      * Properties for error handling
      */
-    self.errorHandler = ko.observable(new myApp.ErrorModel());
+    self.errorHandler = new myApp.ErrorModel();
 
     /*
      * Properties for wikipedia section.
@@ -215,7 +215,7 @@ myApp.main = function() {
       self.venueList.removeAll();
 
       // Set an empty string to remove any error messages.
-      self.errorHandler().errorMessage('');
+      self.errorHandler.errorMessage('');
     };
 
     /**
@@ -244,7 +244,7 @@ myApp.main = function() {
       }).fail(function() {
         var ERROR_MSG = 'Failed to get response from FourSquare Search';
 
-        self.errorHandler().errorMessage(ERROR_MSG);
+        self.errorHandler.errorMessage(ERROR_MSG);
       });
     };
 

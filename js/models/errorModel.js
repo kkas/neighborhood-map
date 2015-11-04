@@ -15,7 +15,7 @@ var myApp = myApp || {};
 
     self.displayErrorMessage = ko.computed(function() {
       return self.errorMessage ? true : false;
-    }, self);
+    });
   };
 
 })(myApp);

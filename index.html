@@ -49,10 +49,8 @@
     </form>
 
     <!-- Placeholder to display an error message when displaying venue list is failed. -->
-    <div data-bind="with: errorHandler">
-      <div class="error" data-bind="if: displayErrorMessage">
-        <h2 data-bind="text: errorMessage"></h2>
-      </div>
+    <div class="error" data-bind="if: errorHandler.displayErrorMessage">
+      <h2 data-bind="text: errorHandler.errorMessage"></h2>
     </div>
 
     <!-- Dropdown Item List -->
