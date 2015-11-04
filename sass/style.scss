@@ -1,14 +1,18 @@
+$desktop-width: 992px;
+$tablet-width: 768px;
+
+$nav-width: 260px;
+$btn-size: 40px;
+
 html,
 body,
+main,
 .row,
 .container-fluid,
 .map-container,
+.map-embed,
 .map-canvas {
   height: 100%;
-}
-
-.map-embed {
-  height: 90%;
 }
 
 body {
@@ -17,21 +21,135 @@ body {
   // box-shadow: inset 0 6px 12px -8px #333;
 }
 
-.row {
-  padding-top: 15px;
+main.shifted {
+ transform: translate($nav-width, 0);
 }
 
-.menu,
-.map-container {
-  background-color: #000;
+/** Ordinary Desktop or larger */
+@media screen and (min-width: $desktop-width) {
+  main {
+    // Always display the navigation menu
+    transform: translate($nav-width, 0);
+  }
 }
 
-.content {
-  color: #000;
-}
-
-.error, .error > h2 {
+.error {
   color: #f00;
 }
 
+/************************
+ * Navigation Menu
+ ************************/
+nav {
+  width: $nav-width;
+  height: 100%;
+  position: absolute;
+  transform: translate(-($nav-width), 0);
+  padding: 10px;
 
+  h2 {
+    margin-top: 0;
+    font-size: 1em;
+  }
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+}
+
+/** Ordinary Desktop or larger */
+@media screen and (min-width: $desktop-width) {
+  nav {
+    // Do not hide the menu
+    transform: translate(0, 0);
+  }
+}
+
+/** tablet or larger */
+@media screen and (min-width: $tablet-width) {
+  nav {
+    h2 {
+      font-size: 2em;
+    }
+  }
+}
+
+nav.open {
+  transform: translate(0, 0);
+}
+
+.btn-wrap {
+  height: $btn-size;
+  width: $btn-size;
+  margin: 10px;
+}
+
+/** Ordinary Desktop or larger */
+@media screen and (min-width: $desktop-width) {
+  .btn-wrap {
+    display: none;
+  }
+}
+
+.nav-toggle {
+  width: 100%;
+  height: 100%;
+  padding: 9px 0 0;
+}
+
+.wiki {
+  max-width: 240px;
+  max-height: 25vh;
+  word-break: break-word;
+
+  .wiki-content {
+    max-height: 20vh;
+    overflow-x: scroll;
+    margin-bottom: 10px;
+  }
+}
+
+/** tablet or larger */
+@media screen and (min-width: $tablet-width) {
+  .wiki {
+    margin-bottom: 20px;
+  }
+}
+
+// Make the dropdown list scrollable
+// http://stackoverflow.com/questions/19227496/scrollable-menu-with-bootstrap-3-menu-expanding-its-container-when-it-should-n
+.scrollable-menu {
+  height: auto;
+  max-height: 50vh;
+  overflow-x: hidden;
+  margin: 0;
+  border: 1px solid;
+
+  li {
+    max-width: 240px;
+    white-space: normal;
+    min-height: 40px;
+    padding: 10px;
+
+    a {
+      color: #fff;
+    }
+  }
+}
+
+/*************************
+ * Map Contents
+ ************************/
+.map-embed {
+  color: #000;
+  height: 90%;
+}
+
+/** Ordinary Desktop or larger */
+@media screen and (min-width: $desktop-width) {
+  .map-embed {
+    height: 100%;
+  }
+}

@@ -8,9 +8,6 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-  <!-- Bootstrap Offcanvas CSS -->
-  <link rel="stylesheet" href="css/offcanvas.css">
-
   <!-- Custome CSS -->
   <link rel="stylesheet" href="css/style.css">
 
@@ -22,63 +19,72 @@
     <p>Cause: <span id="err-msg"></span></p>
   </div>
 
-  <div class="container-fluid">
-    <!-- row -->
-    <div class="row row-offcanvas menu row-offcanvas-left">
-      <!-- col: side menu -->
-      <!-- TODO: size -->
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 menu sidebar-offcanvas">
-        <form data-bind="submit: getVenueList">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search / Filter" aria-describedby="basic-addon2" data-bind="textInput: keyword">
-            <span class="input-group-btn">
-              <button class="btn" id="basic-addon2">Search <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
-          </div> <!-- end of input-group -->
-        </form>
+  <nav id="drawer">
+    <div class="app-name">
+      <h2>My Neighborhood Map</h2>
+    </div>
 
-        <!-- Placeholder to display an error message when displaying venue list is failed. -->
-        <div data-bind="with: errorHandler">
-          <div class="error" data-bind="if: displayErrorMessage">
-            <h2 data-bind="text: errorMessage"></h2>
-          </div>
-        </div>
-
-        <!-- This is the Bootstrap way to create "Linked items" by using <div> instead of <ul> -->
-        <div class="list-group" data-bind="foreach: filteredVenueList">
-          <a href="#" class="list-group-item" data-bind="text: name, click: $root.animateClickedItem"></a>
-        </div>
-      </div>
-
-      <!-- col: map container -->
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 map-container">
-        <ul class="list-inline hidden-lg">
-          <li>
-            <button type="button" class="btn" data-toggle="offcanvas"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></button>
-          </li>
-        </ul>
-        <div class="map-embed">
-          <!-- TODO: -->
-          <div id="map-canvas" class="map-canvas"></div>
-        </div>
+    <!-- Placeholder for Wikipedia -->
+    <div class="wiki">
+      <h3>About San Fransisco</h3>
+      <div class="wiki-content">
+        <p>My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!My name is riano. I am 4 years-old!</p>
       </div>
     </div>
-  </div>
+
+    <form data-bind="submit: getVenueList">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search / Filter" aria-describedby="basic-addon2" data-bind="textInput: keyword">
+
+        <span class="input-group-btn">
+          <button class="btn" id="basic-addon2">Search <span class="glyphicon glyphicon-search" aria-hidden="true">
+            </span>
+          </button>
+        </span>
+      </div> <!-- end of input-group -->
+    </form>
+
+    <!-- Placeholder to display an error message when displaying venue list is failed. -->
+    <div data-bind="with: errorHandler">
+      <div class="error" data-bind="if: displayErrorMessage">
+        <h2 data-bind="text: errorMessage"></h2>
+      </div>
+    </div>
+
+    <!-- Dropdown Item List -->
+    <div class="search-result">
+      <h3>Search Result</h3>
+      <ul class="list-unstyled scrollable-menu" role="list" data-bind="foreach: filteredVenueList">
+        <li><a href="#" data-bind="text: name, click: $root.animateClickedItem"></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="control-bar">
+      <div class='btn-wrap'>
+        <!-- Toggle Menu Button -->
+        <a href="#" class="btn btn-default btn-lg nav-toggle" role="button"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+      </div>
+    </div>
+
+    <div class="map-embed">
+      <!-- TODO: -->
+      <div id="map-canvas" class="map-canvas"></div>
+    </div>
+  </main>
+
 
   <!-- Critical JavaScripts -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="bower_components/knockout/dist/knockout.js"></script>
   <script>
-  // taken from https://getbootstrap.com/examples/offcanvas
-    $(document).ready(function () {
-      $('[data-toggle="offcanvas"]').click(function () {
-        console.log('clicked');
-          $('.row-offcanvas').toggleClass('active');
-      });
-    });
+  $(document).ready(function() {
+    // Add the click event listener to toggle the navigation bar on the left
+    $('.nav-toggle').click(function() {$('#drawer').toggleClass('open'); $('main').toggleClass('shifted');});
+  });
   </script>
 
+  <script src="bower_components/knockout/dist/knockout.js"></script>
   <script src="js/app.js"></script>
   <script src="js/loadGoogleMapScriptAsync.js"></script>
 </body>
