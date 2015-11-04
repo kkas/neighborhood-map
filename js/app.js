@@ -95,13 +95,11 @@ myApp.main = function() {
         }
       }
 
-      /*
-       * Create new markers with the new list.
-       * Avoid re-creating the same markers on each keystroke in the keyword
-       * by setting the timer.
-       *
-       * This will also prevent not showing correct items when typing too fast.
-       */
+      // Create new markers with the new list.
+      // Avoid re-creating the same markers on each keystroke in the keyword
+      // by setting the timer.
+      //
+      // This will also prevent not showing correct items when typing too fast.
       if (!self.isTimerSet) {
         setTimeout(function() {
           self.isTimerSet = false;
@@ -198,10 +196,8 @@ myApp.main = function() {
         length = self.venueList().length,
         marker;
 
-      /*
-       * Use master list here so that we can remove all the markers even
-       * after the search filtering is applied.
-       */
+      // Use master list here so that we can remove all the markers even
+      // after the search filtering is applied.
       for (i = 0; i < length; i++) {
         marker = self.venueList()[i].marker;
         if (marker !== undefined) {
@@ -361,5 +357,6 @@ myApp.main = function() {
     self.init();
   };
 
+  // Start
   ko.applyBindings(new ViewModel());
 };

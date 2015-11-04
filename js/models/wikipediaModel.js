@@ -5,8 +5,7 @@ var myApp = myApp || {};
   'use strict';
 
   /**
-   * [WikipediaModel description]
-   * @param  {[type]} data [description]
+   * ViewModel that is related to wikipedia list.
    * @return {undefined}
    */
   app.WikipediaModel = function() {

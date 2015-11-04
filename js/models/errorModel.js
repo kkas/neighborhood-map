@@ -5,8 +5,8 @@ var myApp = myApp || {};
   'use strict';
 
   /**
-   * Model that contains things that are related to handling
-   * errors. This is currently used for Foursquare Search API.
+   * ViewModel that is related to handling erros.
+   * @return {undefined}
    */
   app.ErrorModel = function() {
     var self = this;
