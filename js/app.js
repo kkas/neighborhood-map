@@ -110,7 +110,7 @@ myApp.main = function() {
       }
 
       return filteredList;
-    }, self);
+    });
 
     /**
      * Add venues to the venueList.
