@@ -43,20 +43,6 @@ myApp.main = function() {
       '&titles=San%20Francisco&callback=?';
 
   /**
-   * Model that contains things that are related to handling
-   * errors. This is currently used for Foursquare Search API.
-   */
-  var ErrorModel = function() {
-    var self = this;
-
-    self.errorMessage = ko.observable('');
-
-    self.displayErrorMessage = ko.computed(function() {
-      return self.errorMessage ? true : false;
-    }, self);
-  };
-
-  /**
    * Model that contains
    * @param {[type]} data [description]
    */
@@ -158,7 +144,7 @@ myApp.main = function() {
     /*
      * Properties for error handling
      */
-    self.errorHandler = ko.observable(new ErrorModel());
+    self.errorHandler = ko.observable(new myApp.ErrorModel());
 
     /*
      * Properties for wikipedia section.
