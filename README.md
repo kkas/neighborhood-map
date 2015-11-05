@@ -1,5 +1,17 @@
 # My Neighborhood Map Project
 
+This is a **single page application** built with **knockoutjs** framework and responsive design pattern, **'off canvas'.**
+
+This app supports mobile, tablet, and desktop devices by applying different styles to each device.
+
+With this app, you can:
+ - Search places (powered by Foursquare)
+ - Filter list items
+ - Restore the previous results after reopen your browser (using the localstorage API)
+
+GitHub Page is available at:
+  * http://kkas.github.io/neighborhood-map/
+
 ## How to Run
 
 Everything is in the repo.
@@ -8,7 +20,7 @@ So, just run the app with `SimpleHTTPServer`. (Or, any http server app)
 git clone <THIS_REPOSITORY_URL>
 cd <THIS_REPOSITORY>
 
-python -m SimpleHTTPServer
+python -m SimpleHTTPServer # And access http://localhost:8000/
 ```
 
 ## Directory Structure
