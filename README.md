@@ -81,6 +81,6 @@ bundle exec sass --watch sass/input.scss:css/output.css
  (For more info about using Sass)
   * http://sass-lang.com/documentation/file.SASS_REFERENCE.html
 
- ## References
+## References
  * https://github.com/tastejs/todomvc/tree/gh-pages/examples/knockoutjs_require
 * http://knockoutjs.com/documentation/introduction.html
