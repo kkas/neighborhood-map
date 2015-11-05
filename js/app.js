@@ -65,52 +65,36 @@ myApp.main = function() {
     self.keyword = ko.observable('');
 
     /**
-     * Filtered list of venues. Computed observable.
+     * Function that handles the filtering when the user type in
+     * keywords for filtering.
      *
-     * This list is actually bound to the list shown in the view.
-     * The filter is the text that is typed in the filter input in the view.
-     * The filter will be applied only if the filter is not empty.
-     * The filter works by case-insensitive.
+     * This function will be called whenever the keyword is changed.
      *
-     * @param  {function} function
-     * @return {Array} an array list of venues that contains ones that contain
-     * the string of filtering word. If no filter is applied, it simply returns
-     * the list with all the items.
+     * @param  {String} filterStr keyword string used for filtering
+     * (this is what the user typed in)
+     * @return {undefined}
      */
-    self.filteredVenueList = ko.computed(function() {
-      var filterStr = self.keyword(),
-        filterRegExp = new RegExp(filterStr, 'i'),
+    self.applyFilter = function(filterStr) {
+      var filterRegExp = new RegExp(filterStr, 'i'),
         length = self.venueList().length,
-        i,
-        filteredList = [];
-
-      // Return the full list when filterStr is empty (no filtering)
-      if (!filterStr) {
-        return self.venueList();
-      }
+        i;
 
       for (i = 0; i < length; i++) {
         if (filterRegExp.test(self.venueList()[i].name)) {
-          filteredList.push(self.venueList()[i]);
+          // When the examined item is matched, show the item
+          self.venueList()[i].marker.setVisible(true);
+          self.venueList()[i].isVisible(true);
+          continue;
         }
+
+        // If the examined item is filtered, make the item hidden.
+        self.venueList()[i].isVisible(false);
+        self.venueList()[i].marker.setVisible(false);
       }
-
-      // Create new markers with the new list.
-      // Avoid re-creating the same markers on each keystroke in the keyword
-      // by setting the timer.
-      //
-      // This will also prevent not showing correct items when typing too fast.
-      if (!self.isTimerSet) {
-        setTimeout(function() {
-          self.isTimerSet = false;
-          self.createMarkers();
-        }, 1000);
-
-        self.isTimerSet = true;
-      }
-
-      return filteredList;
-    });
+    };
+    // Subscribe the change of the 'keyword'. When changed, call the
+    // function.
+    self.keyword.subscribe(self.applyFilter);
 
     /**
      * Add venues to the venueList.
@@ -150,43 +134,65 @@ myApp.main = function() {
     };
 
     /**
-     * Create makers on the map with infoWindows on each marker.
+     * Attach an infoWindow to a marker.
+     * Add the click event listener that opens the infoWindow.
+     *
+     * The infoWindow will keep the content that is associated with the
+     * marker.
+     *
+     * Inspired by:
+     * https://developers.google.com/maps/documentation/javascript/events#EventClosures
+     *
+     * @param  {google.maps.Marker} marker      a marker object to which the
+     * event listener will be attached
+     * @param  {String} contentHTML String that contains the content of the
+     * infoWindow
+     * @return {undefined}
+     */
+    self.attachInfoWindow = function(marker, contentHTML) {
+      var infoWindow = new google.maps.InfoWindow({
+        content: contentHTML
+      });
+
+      // Add a click event listener
+      marker.addListener('click', function() {
+        infoWindow.open(marker.get('map'), marker);
+
+        // Only one infoWindow can be open at once.
+        // If the current InfoWindow and infoWindow are the same,
+        // meaning the same marker is clicked in a row, do not close it.
+        if (self.currentInfoWindow !== infoWindow &&
+          self.currentInfoWindow !== undefined) {
+          self.currentInfoWindow.close();
+        }
+
+        self.currentInfoWindow = infoWindow;
+      });
+    };
+
+    /**
+     * Create makers on the map with the infoWindows.
      * @return {undefined}
      */
     self.createMarkers = function() {
-
       // Remove all the markers before placing new ones.
       self.removeAllMarkers();
 
-      // Create the markers based on the filtered list (not the master list).
-      self.filteredVenueList().forEach(function(venue) {
+      // Iterate through each item and create a marker for it.
+      self.venueList().forEach(function(venue) {
         var marker = new google.maps.Marker(
           {
             map: self.map,
             position: venue.position,
             icon: venue.icon,
-          }),
-          infoWindow = new google.maps.InfoWindow({
-            content: venue.infoWindowContent
           });
 
           // Set the marker to the current venue object.
           venue.marker = marker;
 
-          // Open the infoWindow when the marker is clicked
-          marker.addListener('click', function(e) {
-            infoWindow.open(self.map, marker);
-
-            // Only one infoWindow can be open at once.
-            // If the current InfoWindow and infoWindow are the same,
-            // meaning the same marker is clicked in a row, do not close it.
-            if ( self.currentInfoWindow !== infoWindow &&
-              self.currentInfoWindow !== undefined) {
-              self.currentInfoWindow.close();
-            }
-
-            self.currentInfoWindow = infoWindow;
-          });
+          // Attach the marker and a infoWindow with the content stored in the
+          // venue object.
+          self.attachInfoWindow(marker, venue.infoWindowContent);
       });
     };
 
@@ -199,8 +205,7 @@ myApp.main = function() {
         length = self.venueList().length,
         marker;
 
-      // Use master list here so that we can remove all the markers even
-      // after the search filtering is applied.
+      // Remove all the markers from the map.
       for (i = 0; i < length; i++) {
         marker = self.venueList()[i].marker;
         if (marker !== undefined) {
@@ -251,6 +256,7 @@ myApp.main = function() {
 
     /**
      * Set the bouncing animation to the marker that is clicked.
+     * Then open the associated infoWindow for the marker.
      * @param  {venueViewModel} venue venue item on which the user just clicked.
      * @return {undefined}
      */
@@ -260,6 +266,20 @@ myApp.main = function() {
         self.curAnimatingMarker.setAnimation(null);
       }
 
+      // If any infoWindow is opened, close it.
+      if(self.currentInfoWindow !== undefined) {
+        self.currentInfoWindow.close();
+      }
+
+      // Recreate the infoWindow based on the info stored in the clicked object.
+      self.currentInfoWindow = new google.maps.InfoWindow({
+        content: venue.infoWindowContent
+      });
+
+      // Open the newly created infoWindow.
+      self.currentInfoWindow.open(venue.marker.get('map'), venue.marker);
+
+      // Set the animation onto the associated marker.
       venue.marker.setAnimation(google.maps.Animation.BOUNCE);
 
       // Store the marker for the next round.

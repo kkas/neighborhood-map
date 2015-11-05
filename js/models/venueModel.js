@@ -106,5 +106,14 @@ var myApp = myApp || {};
       self.location.lat, self.location.lng);
     self.marker = undefined;
     self.infoWindowContent = self.createInfoWindowContent(self);
+
+    /*
+     * --------------------------------
+     * Extra properties for display
+     * --------------------------------
+     */
+    // Set false when you want not to show this item on the list.
+    self.isVisible = ko.observable(true);
+
   }; // end of VenueModel
 })(myApp);

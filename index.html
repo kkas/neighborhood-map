@@ -56,8 +56,10 @@
     <!-- Dropdown Item List -->
     <div class="search-result">
       <h3>Search Result</h3>
-      <ul class="list-unstyled scrollable-menu" role="list" data-bind="foreach: filteredVenueList">
-        <li><a href="#" data-bind="text: name, click: $root.animateClickedItem"></a></li>
+      <ul class="list-unstyled scrollable-menu" role="list" data-bind="foreach: venueList">
+        <div data-bind="if: $data.isVisible">
+          <li><a href="#" data-bind="text: name, click: $parent.animateClickedItem"></a></li>
+        </div>
       </ul>
     </div>
   </nav>
