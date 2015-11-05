@@ -234,16 +234,18 @@ myApp.main = function() {
      * @return {undefined}
      */
     self.getVenueList = function() {
+      var query = foursquareSearchAPI;
+
       // Clean up the current venue list (this is mainly for the search more
       // than 2nd time)
       self.resetListView();
 
       // Use the keyword if any for the search.
       if (self.keyword().length > 0) {
-        foursquareSearchAPI += '&query=' + self.keyword();
+        query += '&query=' + self.keyword();
       }
 
-      $.getJSON(foursquareSearchAPI, function(data) {
+      $.getJSON(query, function(data) {
         // create and add venues to the list.
         self.addVenues(data.response.venues);
 
