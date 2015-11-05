@@ -79,6 +79,11 @@ myApp.main = function() {
         length = self.venueList().length,
         i;
 
+      // Close the current opened infoWindow if any.
+      if (self.currentInfoWindow !== undefined) {
+        self.currentInfoWindow.close();
+      }
+
       for (i = 0; i < length; i++) {
         if (filterRegExp.test(self.venueList()[i].name)) {
           // When the examined item is matched, show the item
