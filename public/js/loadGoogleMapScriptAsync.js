@@ -1,0 +1,1 @@
+var myApp=myApp||{};!function(app){"use strict";var URL="https://maps.googleapis.com/maps/api/js?callback=myApp.executeApp";app.executeApp=function(){this.main()},$.getScript(URL).fail(function(){var ERR_MSG="Failed to load the map.";$(".error").removeClass("hidden"),$("#err-msg").text(ERR_MSG)})}(myApp);

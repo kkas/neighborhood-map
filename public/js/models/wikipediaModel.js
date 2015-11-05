@@ -1,0 +1,1 @@
+var myApp=myApp||{};!function(app){"use strict";app.WikipediaModel=function(){var self=this;self.pageid=ko.observable(""),self.content=ko.observable(""),self.title=ko.observable("San Francisco"),self.error=ko.observable(!1),self.errorMsg="Currently Not Available. Try Again Later.",self.showError=ko.computed(function(){return self.error()})}}(myApp);
