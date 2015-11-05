@@ -175,9 +175,6 @@ myApp.main = function() {
      * @return {undefined}
      */
     self.createMarkers = function() {
-      // Remove all the markers before placing new ones.
-      self.removeAllMarkers();
-
       // Iterate through each item and create a marker for it.
       self.venueList().forEach(function(venue) {
         var marker = new google.maps.Marker(
@@ -229,16 +226,18 @@ myApp.main = function() {
     /**
      * Call the API to retrieve items based on the keyword that is typed in
      * from the user.
-     *
      * Currently, FourSquare Search API is used.
+     *
+     * Create a new list with the item retrieved from the API call.
+     *
      * @return {undefined}
      */
-    self.getVenueList = function() {
+    self.createNewList = function() {
       var query = foursquareSearchAPI;
 
-      // Clean up the current venue list (this is mainly for the search more
-      // than 2nd time)
+      // Clean up the current venue list and the markers on the map if any.
       self.resetListView();
+      self.removeAllMarkers();
 
       // Use the keyword if any for the search.
       if (self.keyword().length > 0) {
@@ -352,8 +351,8 @@ myApp.main = function() {
       var storedData = window.localStorage.getItem(config.localStorageItem);
 
       if(storedData === null) {
-        // Call the API for the items
-        self.getVenueList();
+        // Call the API for the items and create a new list.
+        self.createNewList();
         return;
       }
 
