@@ -235,9 +235,10 @@ myApp.main = function() {
     self.createNewList = function() {
       var query = foursquareSearchAPI;
 
-      // Clean up the current venue list and the markers on the map if any.
-      self.resetListView();
+      // Clean up the current venue list.
+      // Remove all the markers first, and the delete the items in the list.
       self.removeAllMarkers();
+      self.resetListView();
 
       // Use the keyword if any for the search.
       if (self.keyword().length > 0) {
