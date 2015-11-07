@@ -133,6 +133,23 @@ module.exports = function(grunt) {
             '<%= myConfig.prodDir %>/js/lib/knockout/knockout.js'
         }
       }
+    },
+    // Watch files for being updated (used when developing)
+    watch: {
+      scripts: {
+        // TODO: set Base dir. 
+        //cwd: '<%= myConfig.devDir %>',
+        // files being watched
+        files: [
+          '<%= myConfig.devDir %>/**/*.js',
+          '<%= myConfig.devDir %>/**/*.css'
+        ],
+        // Run the tasks below on change
+        tasks: ['dev'],
+        options: {
+          spawn: true
+        }
+      }
     }
   });
 
@@ -141,6 +158,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
   grunt.registerTask('default', ['dev']);
