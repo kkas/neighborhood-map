@@ -6,7 +6,6 @@ var myApp = myApp || {};
 (function(app) {
   'use strict';
 
-  //TODO: change the name.
   /**
    * ViewModel that is related to Navigation menu on the left.
    * @return {undefined}
