@@ -136,6 +136,16 @@ module.exports = function(grunt) {
     },
     // Watch files for being updated (used when developing)
     watch: {
+      sass: {
+        files: [
+          '<%= myConfig.devDir %>/**/*.scss'
+        ],
+        // Run the tasks below on change
+        tasks: ['sass'],
+        options: {
+          spawn: true
+        }
+      },
       scripts: {
         // TODO: set Base dir. 
         //cwd: '<%= myConfig.devDir %>',
