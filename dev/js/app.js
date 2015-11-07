@@ -262,6 +262,26 @@ myApp.main = function() {
     };
 
     /**
+     * Handle a click event of an item in the list view.
+     * @param  {venueViewModel} venue venue item on which the user just clicked.
+     * @return {undefined}
+     */
+    self.handleItemClick = function(venue) {
+      // Indicate whether the user is using a small device or not.
+      // See the doc about 'window.innerWidth'
+      // https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth
+      var isDeviceSmall = window.innerWidth <= config.SMALL_DEVICE_WIDTH;
+
+      // Hide the list view if the device is small.
+      if(isDeviceSmall) {
+        self.nav.menuShown(false);
+      }
+
+      // Apply an animation onto the clicked item.
+      self.animateClickedItem(venue);
+    };
+
+    /**
      * Set the bouncing animation to the marker that is clicked.
      * Then open the associated infoWindow for the marker.
      * @param  {venueViewModel} venue venue item on which the user just clicked.

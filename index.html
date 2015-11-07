@@ -58,7 +58,7 @@
       <h3>Search Result</h3>
       <ul class="list-unstyled scrollable-menu" role="list" data-bind="foreach: venueList">
         <div data-bind="if: $data.isVisible">
-          <li><a href="#" data-bind="text: name, click: $parent.animateClickedItem"></a></li>
+          <li><a href="#" data-bind="text: name, click: $parent.handleItemClick"></a></li>
         </div>
       </ul>
     </div>
