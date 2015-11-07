@@ -6,22 +6,28 @@ main,
 .map-container,
 .map-embed,
 .map-canvas {
-  height: 100%; }
+  height: 100%;
+}
 
 body {
   background-color: #555E69;
-  color: #fff; }
+  color: #fff;
+}
 
 main.shifted {
   transform: translate(260px, 0);
-  transition: transform 0.3s ease; }
+  transition: transform 0.3s ease;
+}
 
 /** Ordinary Desktop or larger */
 @media screen and (min-width: 992px) {
   main {
-    transform: translate(260px, 0); } }
+    transform: translate(260px, 0);
+  }
+}
 .error {
-  color: #f00; }
+  color: #f00;
+}
 
 /************************
  * Navigation Menu
@@ -31,78 +37,100 @@ nav {
   height: 100%;
   position: absolute;
   transform: translate(-260px, 0);
-  padding: 10px; }
-  nav h2 {
-    margin-top: 0;
-    font-size: 1em; }
-  nav h3 {
-    margin-top: 0;
-    font-size: 1.5em;
-    margin-bottom: 5px; }
+  padding: 10px;
+}
+nav h2 {
+  margin-top: 0;
+  font-size: 1em;
+}
+nav h3 {
+  margin-top: 0;
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
 
 /** Ordinary Desktop or larger */
 @media screen and (min-width: 992px) {
   nav {
     transform: translate(0, 0);
-    transition: transform 0.3s ease; } }
+    transition: transform 0.3s ease;
+  }
+}
 /** tablet or larger */
 @media screen and (min-width: 768px) {
   nav h2 {
-    font-size: 2em; } }
+    font-size: 2em;
+  }
+}
 nav.open {
-  transform: translate(0, 0); }
+  transform: translate(0, 0);
+}
 
 .btn-wrap {
   height: 40px;
   width: 40px;
-  margin: 10px; }
+  margin: 10px;
+}
 
 /** Ordinary Desktop or larger */
 @media screen and (min-width: 992px) {
   .btn-wrap {
-    display: none; } }
+    display: none;
+  }
+}
 .nav-toggle {
   width: 100%;
   height: 100%;
-  padding: 9px 0 0; }
+  padding: 9px 0 0;
+}
 
 .wiki {
   max-width: 240px;
   max-height: 25vh;
-  word-break: break-word; }
-  .wiki .wiki-content {
-    max-height: 20vh;
-    overflow-x: scroll;
-    margin-bottom: 10px; }
+  word-break: break-word;
+}
+.wiki .wiki-content {
+  max-height: 20vh;
+  overflow-x: scroll;
+  margin-bottom: 10px;
+}
 
 /** tablet or larger */
 @media screen and (min-width: 768px) {
   .wiki {
-    margin-bottom: 20px; } }
+    margin-bottom: 20px;
+  }
+}
 .scrollable-menu {
   height: auto;
   max-height: 50vh;
   overflow-x: hidden;
   margin: 0;
-  border: 1px solid; }
-  .scrollable-menu li {
-    max-width: 240px;
-    white-space: normal;
-    min-height: 40px;
-    padding: 10px; }
-    .scrollable-menu li a {
-      color: #fff; }
+  border: 1px solid;
+}
+.scrollable-menu li {
+  max-width: 240px;
+  white-space: normal;
+  min-height: 40px;
+  padding: 10px;
+}
+.scrollable-menu li a {
+  color: #fff;
+}
 
 /*************************
  * Map Contents
  ************************/
 .map-embed {
   color: #000;
-  height: 90%; }
+  height: 90%;
+}
 
 /** Ordinary Desktop or larger */
 @media screen and (min-width: 992px) {
   .map-embed {
-    height: 100%; } }
+    height: 100%;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */
