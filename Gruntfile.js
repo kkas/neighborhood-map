@@ -150,6 +150,23 @@ module.exports = function(grunt) {
           spawn: true
         }
       }
+    },
+    // SASS task
+    sass: {
+      dist: {
+        options: {
+          style: 'expanded', // available options: nested, compact, compressed, expanded
+          bundleExec: true
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          cwd: '<%= myConfig.devDir %>',
+          src:['sass/**/*.scss'],
+          dest: '<%= myConfig.devDir %>/css',
+          ext: '.css'
+        }]
+      }
     }
   });
 
@@ -159,6 +176,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   // Default task.
   grunt.registerTask('default', ['dev']);
