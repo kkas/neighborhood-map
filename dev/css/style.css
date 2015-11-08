@@ -291,4 +291,26 @@ form {
   height: 90%;
 }
 
+/******************************
+ * Venue Contents (infoWindow)
+ ******************************/
+/* venue name */
+.name {
+  font-weight: bold;
+  font-size: 2em;
+  font-family: 'Lobster', cursive;
+  font-style: italic;
+  margin-right: 5px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-key {
+  font-weight: bold;
+  font-style: italic;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -29,18 +29,18 @@ var myApp = myApp || {};
      * used in the infoWindow.
      */
     self.createInfoWindowContent = function() {
-      var infoWindowContentHTML = '<div class="content">',
-        keys = [
-          'name',
-          'contactHTML',
-          'popular',
-          'likes',
-          'shortUrl'
-        ];
+      var infoWindowContentHTML = '<div class="content">';
 
-      keys.forEach(function(key) {
-        infoWindowContentHTML += '<p>' + self[key] + '</p>';
-      });
+      infoWindowContentHTML += self['name'] ?
+        '<p class="name">' + self['name'] + '</p>' : '';
+      infoWindowContentHTML += self['contactHTML'] ?
+        '<p class="contact">' + self['contactHTML'] + '</p>' : '';
+      infoWindowContentHTML += self['popular'] ?
+        '<p class="popular">' + self['popular'] + '</p>' : '';
+      infoWindowContentHTML += self['likes'] ?
+        '<p class="likes">' + self['likes'] + '</p>' : '';
+      infoWindowContentHTML += self['shortUrl'] ?
+        '<p class="shortUrl">' + self['shortUrl'] + '</p>' : '';
 
       infoWindowContentHTML += '</div>';
 
@@ -55,13 +55,13 @@ var myApp = myApp || {};
      * infoWindow.
      */
     self.createContact = function(contact) {
-      var contactHTML = '<ul class="list-inline">',
+      var contactHTML = '<ul class="contact-list">',
         key;
 
       for (key in contact) {
         if (contact[key]) {
-          contactHTML += '<li>' + '<strong>' + key + ':</strong>' +
-           contact[key] + '</li>';
+          contactHTML += '<li>' + '<span class="contact-key">' + key +
+          ': </span>' + contact[key] + '</li>';
         }
       }
 
