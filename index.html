@@ -23,16 +23,18 @@
   <!-- 'open' class will be applied when nav.menuShown in true -->
   <nav id="drawer" data-bind="css: {open: nav.menuShown}">
     <div class="app-name">
-      <h2>My Neighborhood Map</h2>
+      <p>My Neighborhood Map</p>
     </div>
 
     <!-- Placeholder for Wikipedia -->
-    <div class="wiki" data-bind="with: wikipedia">
-      <h3>About <span data-bind="text: title"></span></h3>
-      <div class="wiki-content" data-bind="html: content">
-      </div>
-      <div data-bind="if: showError">
-        <p class="error" data-bind="text: errorMsg"></p>
+    <div class="wiki-wrapper">
+      <div class="wiki" data-bind="with: wikipedia">
+        <div class="place-name">About <span data-bind="text: title"></span></div>
+        <div class="wiki-content" data-bind="html: content">
+        </div>
+        <div data-bind="if: showError">
+          <p class="error" data-bind="text: errorMsg"></p>
+        </div>
       </div>
     </div>
 
@@ -55,7 +57,7 @@
 
     <!-- Dropdown Item List -->
     <div class="search-result">
-      <h3>Search Result</h3>
+      <p>Search Result</p>
       <ul class="list-unstyled scrollable-menu" role="list" data-bind="foreach: venueList">
         <div data-bind="if: $data.isVisible">
           <li><a href="#" data-bind="text: name, click: $parent.handleItemClick"></a></li>

@@ -1,64 +1,163 @@
+/*
+ * All of the styles are Mobile-fast and in portrait orientation by default.
+ */
 html,
 body,
-main,
-.row,
-.container-fluid,
-.map-container,
-.map-embed,
-.map-canvas {
-  height: 100%;
+main {
+  height: 100vh;
 }
 
 body {
   background-color: #555E69;
   color: #fff;
-}
-
-main.shifted {
-  transform: translate(260px, 0);
-  transition: transform 0.3s ease;
+  width: 100vw;
 }
 
 /** Ordinary Desktop or larger */
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1280px) {
+  body {
+    display: flex;
+  }
+}
+/************************
+ * Main
+ ************************/
+/** Ordinary Desktop or larger */
+@media screen and (min-width: 1280px) {
   main {
-    transform: translate(260px, 0);
+    width: 70vw;
+  }
+}
+main.shifted {
+  transform: translate(85vw, 0);
+  transition: transform 0.3s ease;
+}
+
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  main.shifted {
+    transform: translate(40vw, 0);
+  }
+}
+/** Tablet or larger */
+@media screen and (min-width: 768px) {
+  main.shifted {
+    transform: translate(35vw, 0);
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and (min-width: 768px) and (orientation: landscape) {
+  main.shifted {
+    transform: translate(35vw, 0);
   }
 }
 .error {
   color: #f00;
 }
 
+.map-container,
+.map-embed,
+.map-canvas {
+  height: 90vh;
+}
+
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  .map-container,
+  .map-embed,
+  .map-canvas {
+    height: 83vh;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and (min-width: 768px) and (orientation: landscape) {
+  .map-container,
+  .map-embed,
+  .map-canvas {
+    height: 90vh;
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and (min-width: 1280px) {
+  .map-container,
+  .map-embed,
+  .map-canvas {
+    height: 100vh;
+  }
+}
 /************************
  * Navigation Menu
  ************************/
 nav {
-  width: 260px;
+  width: 85vw;
   height: 100%;
   position: absolute;
-  transform: translate(-260px, 0);
+  transform: translate(-85vw, 0);
   padding: 10px;
 }
-nav h2 {
-  margin-top: 0;
-  font-size: 1em;
-}
-nav h3 {
-  margin-top: 0;
-  font-size: 1.5em;
-  margin-bottom: 5px;
-}
 
-/** Ordinary Desktop or larger */
-@media screen and (min-width: 992px) {
+/** Tablet or larger */
+@media screen and (min-width: 768px) {
   nav {
-    transform: translate(0, 0);
-    transition: transform 0.3s ease;
+    width: 35vw;
+    transform: translate(-35vw, 0);
   }
 }
-/** tablet or larger */
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  nav {
+    padding-top: 0;
+    width: 40vw;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and (min-width: 768px) and (orientation: landscape) {
+  nav {
+    width: 35vw;
+    transform: translate(-35vw, 0);
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and (min-width: 1280px) {
+  nav {
+    padding: 10px;
+    position: static;
+    width: 30vw;
+    transform: translate(0, 0);
+  }
+}
+.app-name {
+  height: 5%;
+}
+.app-name p {
+  margin: 0;
+  font-size: 1em;
+}
+
+/** Tablet or larger */
 @media screen and (min-width: 768px) {
-  nav h2 {
+  .app-name {
+    height: 3%;
+  }
+}
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  .app-name {
+    display: none;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and (min-width: 768px) and (orientation: landscape) {
+  .app-name {
+    display: block;
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and (min-width: 1280px) {
+  .app-name {
+    height: 5%;
+  }
+  .app-name p {
     font-size: 2em;
   }
 }
@@ -73,7 +172,7 @@ nav.open {
 }
 
 /** Ordinary Desktop or larger */
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1280px) {
   .btn-wrap {
     display: none;
   }
@@ -84,34 +183,100 @@ nav.open {
   padding: 9px 0 0;
 }
 
-.wiki {
-  max-width: 240px;
-  max-height: 25vh;
-  word-break: break-word;
-}
-.wiki .wiki-content {
-  max-height: 20vh;
-  overflow-x: scroll;
-  margin-bottom: 10px;
+.wiki-wrapper {
+  height: 30%;
 }
 
-/** tablet or larger */
+/** Tablet or larger */
 @media screen and (min-width: 768px) {
-  .wiki {
-    margin-bottom: 20px;
+  .wiki-wrapper {
+    height: 32%;
+  }
+}
+@media screen and (orientation: landscape) {
+  .wiki-wrapper {
+    height: 35%;
+  }
+}
+.wiki {
+  height: 100%;
+  word-break: break-word;
+  padding-bottom: 20px;
+}
+
+.wiki-content {
+  border: 1px solid;
+  padding: 5px;
+  height: 90%;
+  overflow-x: scroll;
+}
+
+.place-name {
+  font-size: 1.3em;
+}
+
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  .place-name {
+    font-size: 1em;
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and (min-width: 1280px) {
+  .place-name {
+    font-size: 1.3em;
+  }
+}
+form {
+  height: 5%;
+}
+
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  form {
+    height: 10%;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and (min-width: 768px) and (orientation: landscape) {
+  form {
+    height: 7%;
+  }
+}
+.search-result {
+  height: 60%;
+  padding-bottom: 5%;
+}
+.search-result p {
+  font-size: 1.3em;
+  margin: 0;
+  padding: 10px 0 0;
+}
+
+/** Mobile in landscape mode */
+@media screen and (orientation: landscape) {
+  .search-result {
+    height: 55%;
+    padding: 0 0 5px 0;
+  }
+  .search-result p {
+    font-size: 1em;
+    padding: 0;
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and (min-width: 1280px) {
+  .search-result p {
+    font-size: 1.3em;
   }
 }
 .scrollable-menu {
-  height: auto;
-  max-height: 50vh;
+  height: 90%;
   overflow-x: hidden;
   margin: 0;
   border: 1px solid;
 }
 .scrollable-menu li {
-  max-width: 240px;
-  white-space: normal;
-  min-height: 40px;
   padding: 10px;
 }
 .scrollable-menu li a {
@@ -124,13 +289,6 @@ nav.open {
 .map-embed {
   color: #000;
   height: 90%;
-}
-
-/** Ordinary Desktop or larger */
-@media screen and (min-width: 992px) {
-  .map-embed {
-    height: 100%;
-  }
 }
 
 /*# sourceMappingURL=style.css.map */

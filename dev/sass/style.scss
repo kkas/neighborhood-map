@@ -1,42 +1,118 @@
-$desktop-width: 992px;
-$tablet-width: 768px;
+/*
+ * All of the styles are Mobile-fast and in portrait orientation by default.
+ */
 
-$nav-width: 260px;
+// Variable definitions
+$tablet-width: 768px;
+$desktop-width: 1280px;
+
+$nav-width: 85vw;
+$nav-width-landscape: 40vw;
+$nav-width-tablet: 35vw;
+$nav-width-tablet-landscape: 35vw;
+$nav-width-bigscreen: 30vw;
+
 $btn-size: 40px;
+
+$landscape: "(orientation: landscape)";
+$tablet-or-larger: "(min-width: #{$tablet-width})";
+$tablet-or-larger-land: "(min-width: #{$tablet-width}) and (orientation: landscape)";
+$desktop-or-larger: "(min-width: #{$desktop-width})";
+
 
 html,
 body,
-main,
-.row,
-.container-fluid,
-.map-container,
-.map-embed,
-.map-canvas {
-  height: 100%;
+main {
+  height: 100vh;
 }
+
 
 body {
   background-color: #555E69;
   color: #fff;
-  // box-shadow: inset 0 6px 12px -8px #333;
+  width: 100vw;
+}
+/** Ordinary Desktop or larger */
+@media screen and #{$desktop-or-larger} {
+  body {
+    display: flex;
+  }
+}
+
+
+/************************
+ * Main
+ ************************/
+
+/** Ordinary Desktop or larger */
+@media screen and #{$desktop-or-larger} {
+  main {
+    width: 70vw;
+  }
 }
 
 main.shifted {
  transform: translate($nav-width, 0);
  transition: transform 0.3s ease;
 }
-
-/** Ordinary Desktop or larger */
-@media screen and (min-width: $desktop-width) {
-  main {
-    // Always display the navigation menu
-    transform: translate($nav-width, 0);
+// @media screen and (orientation: landscape) {
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  main.shifted {
+    transform: translate($nav-width-landscape, 0);
   }
 }
+// @media screen and (min-width: $tablet-width) {
+/** Tablet or larger */
+@media screen and #{$tablet-or-larger} {
+  main.shifted {
+    transform: translate($nav-width-tablet, 0);
+  }
+}
+// @media screen and (min-width: $tablet-width) and (orientation: landscape) {
+/** Tablet or larger and in landscape mode */
+@media screen and #{$tablet-or-larger-land} {
+  main.shifted {
+    transform: translate($nav-width-tablet-landscape, 0);
+  }
+}
+
 
 .error {
   color: #f00;
 }
+
+
+.map-container,
+.map-embed,
+.map-canvas {
+  height: 90vh;
+}
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  .map-container,
+  .map-embed,
+  .map-canvas {
+    height: 83vh;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and #{$tablet-or-larger-land} {
+  .map-container,
+  .map-embed,
+  .map-canvas {
+    height: 90vh;
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and #{$desktop-or-larger} {
+  .map-container,
+  .map-embed,
+  .map-canvas {
+    height: 100vh;
+  }
+}
+
 
 /************************
  * Navigation Menu
@@ -47,53 +123,94 @@ nav {
   position: absolute;
   transform: translate(-($nav-width), 0);
   padding: 10px;
+}
+/** Tablet or larger */
+@media screen and #{$tablet-or-larger} {
+  nav {
+    width: $nav-width-tablet;
+    transform: translate(-($nav-width-tablet), 0);
+  }
+}
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  nav {
+    padding-top: 0;
+    width: $nav-width-landscape
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and #{$tablet-or-larger-land} {
+  nav {
+    width: $nav-width-tablet-landscape;
+    transform: translate(-($nav-width-tablet-landscape), 0);
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and #{$desktop-or-larger} {
+  nav {
+    padding: 10px;
+    position: static;
+    width: $nav-width-bigscreen;
+    transform: translate(0, 0);
+  }
+}
 
-  h2 {
-    margin-top: 0;
+
+.app-name {
+  height: 5%;
+
+  p {
+    margin: 0;
     font-size: 1em;
   }
-
-  h3 {
-    margin-top: 0;
-    font-size: 1.5em;
-    margin-bottom: 5px;
+}
+/** Tablet or larger */
+@media screen and #{$tablet-or-larger} {
+  .app-name {
+    height: 3%;
   }
 }
-
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  .app-name {
+    display: none;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and #{$tablet-or-larger-land} {
+  .app-name {
+    display: block;
+  }
+}
 /** Ordinary Desktop or larger */
-@media screen and (min-width: $desktop-width) {
-  nav {
-    // Do not hide the menu
-    transform: translate(0, 0);
-    transition: transform 0.3s ease;
-  }
-}
+@media screen and #{$desktop-or-larger} {
+  .app-name {
+    height: 5%;
 
-/** tablet or larger */
-@media screen and (min-width: $tablet-width) {
-  nav {
-    h2 {
+    p {
       font-size: 2em;
     }
   }
 }
 
+
 nav.open {
   transform: translate(0, 0);
 }
+
 
 .btn-wrap {
   height: $btn-size;
   width: $btn-size;
   margin: 10px;
 }
-
 /** Ordinary Desktop or larger */
-@media screen and (min-width: $desktop-width) {
+@media screen and #{$desktop-or-larger} {
   .btn-wrap {
     display: none;
   }
 }
+
 
 .nav-toggle {
   width: 100%;
@@ -101,38 +218,111 @@ nav.open {
   padding: 9px 0 0;
 }
 
-.wiki {
-  max-width: 240px;
-  max-height: 25vh;
-  word-break: break-word;
 
-  .wiki-content {
-    max-height: 20vh;
-    overflow-x: scroll;
-    margin-bottom: 10px;
+.wiki-wrapper {
+  height: 30%;
+}
+/** Tablet or larger */
+@media screen and #{$tablet-or-larger} {
+  .wiki-wrapper {
+    height: 32%;
+  }
+}
+@media screen and (orientation: landscape) {
+  .wiki-wrapper {
+    height: 35%;
   }
 }
 
-/** tablet or larger */
-@media screen and (min-width: $tablet-width) {
-  .wiki {
-    margin-bottom: 20px;
+
+.wiki {
+  height: 100%;
+  word-break: break-word;
+  padding-bottom: 20px;
+}
+
+
+.wiki-content {
+  border: 1px solid;
+  padding: 5px;
+  height: 90%;
+  overflow-x: scroll;
+}
+
+
+.place-name {
+  font-size: 1.3em;
+}
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  .place-name {
+    font-size: 1em;
+  }
+}/** Ordinary Desktop or larger */
+@media screen and #{$desktop-or-larger} {
+  .place-name {
+    font-size: 1.3em;
+  }
+}
+
+
+form {
+  height: 5%;
+}
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  form {
+    height: 10%;
+  }
+}
+/** Tablet or larger and in landscape mode */
+@media screen and #{$tablet-or-larger-land} {
+  form {
+    height: 7%;
+  }
+}
+
+
+.search-result {
+  height: 60%;
+  padding-bottom: 5%;
+
+  p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 10px 0 0;
+  }
+}
+/** Mobile in landscape mode */
+@media screen and #{$landscape} {
+  .search-result {
+    height: 55%;
+    padding: 0 0 5px 0;
+
+    p {
+      font-size: 1em;
+      padding: 0;
+    }
+  }
+}
+/** Ordinary Desktop or larger */
+@media screen and #{$desktop-or-larger} {
+  .search-result {
+    p {
+      font-size: 1.3em;
+    }
   }
 }
 
 // Make the dropdown list scrollable
 // http://stackoverflow.com/questions/19227496/scrollable-menu-with-bootstrap-3-menu-expanding-its-container-when-it-should-n
 .scrollable-menu {
-  height: auto;
-  max-height: 50vh;
+  height: 90%;
   overflow-x: hidden;
   margin: 0;
   border: 1px solid;
 
   li {
-    max-width: 240px;
-    white-space: normal;
-    min-height: 40px;
     padding: 10px;
 
     a {
@@ -141,17 +331,11 @@ nav.open {
   }
 }
 
+
 /*************************
  * Map Contents
  ************************/
 .map-embed {
   color: #000;
   height: 90%;
-}
-
-/** Ordinary Desktop or larger */
-@media screen and (min-width: $desktop-width) {
-  .map-embed {
-    height: 100%;
-  }
 }
