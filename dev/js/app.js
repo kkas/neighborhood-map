@@ -51,7 +51,6 @@ myApp.main = function() {
      */
     self.map = undefined;
     self.currentInfoWindow = undefined;
-    self.isTimerSet = false;
     self.curAnimatingMarker = undefined;
     self.animationTimerID = undefined;
 
