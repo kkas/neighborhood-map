@@ -21,7 +21,6 @@ var myApp = myApp || {};
    */
   app.VenueModel = function(data) {
     var self = this,
-    categories = data.categories,
     icon;
 
     /**
@@ -47,8 +46,8 @@ var myApp = myApp || {};
 
       infoWindowContentHTML += self['name'] ?
         NAME_TMPL.replace(/%%data%%/, self['name']) : '';
-      infoWindowContentHTML += self['contactHTML'] ?
-        CONTACT_TMPL.replace(/%%data%%/, self['contactHTML']) : '';
+      infoWindowContentHTML += self['contact'] ? CONTACT_TMPL.replace(
+        /%%data%%/,self.createContact(self['contact'])) : '';
       infoWindowContentHTML += self['url'] ?
         URL_TMPL.replace(/%%data%%/g, self['url']) : '';
       infoWindowContentHTML += self['hours'] && self['hours'].status ?
@@ -90,26 +89,17 @@ var myApp = myApp || {};
      * Properties for venue
      * -----------------------
      */
-    self.name = data.name || '';
-    self.description = data.description || '';
-    self.contact = data.contact || '';
-    self.contactHTML = self.createContact(self.contact) || '';
-    self.popular = data.popular || '';
-    self.likes = data.likes || '';
-    self.shortUrl = data.shortUrl || '';
-    self.location = data.location || '';
-    self.categories = data.categories || [];
-    self.url = data.url || '';
-    self.hours = data.hours || '';
-    self.price = data.price || '';
-    self.rating = data.rating || '';
+    // Set properties stored in the 'data' object.
+    for(var key in data) {
+      self[key] = data[key];
+    }
 
     /*
      * categories can be empty. See the doc for this for more info.
      * https://developer.foursquare.com/docs/responses/venue
      */
-    if (categories.length > 0) {
-      icon = categories[0].icon;
+    if (data.categories.length > 0) {
+      icon = data.categories[0].icon;
       self.icon = icon.prefix + 'bg_' + ICON_SIZE + icon.suffix;
     } else {
       // Use the default google map icon if the categories array is empty.
