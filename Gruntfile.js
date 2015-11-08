@@ -35,8 +35,8 @@ module.exports = function(grunt) {
           // Copy js files
           {
             expand: true,
-            src: ['<%= myConfig.devDir %>/js/models/*.js'],
-            dest: '<%= myConfig.prodDir %>/js/models',
+            src: ['<%= myConfig.devDir %>/js/viewModels/*.js'],
+            dest: '<%= myConfig.prodDir %>/js/viewModels',
             flatten: true
           },
           // Copy css files
@@ -111,17 +111,17 @@ module.exports = function(grunt) {
           '<%= myConfig.prodDir %>/js/loadGoogleMapScriptAsync.js':
             '<%= myConfig.prodDir %>/js/loadGoogleMapScriptAsync.js',
 
-          '<%= myConfig.prodDir %>/js/models/errorModel.js':
-            '<%= myConfig.prodDir %>/js/models/errorModel.js',
+          '<%= myConfig.prodDir %>/js/viewModels/error.js':
+            '<%= myConfig.prodDir %>/js/viewModels/error.js',
 
-          '<%= myConfig.prodDir %>/js/models/navigationModel.js':
-            '<%= myConfig.prodDir %>/js/models/navigationModel.js',
+          '<%= myConfig.prodDir %>/js/viewModels/navigation.js':
+            '<%= myConfig.prodDir %>/js/viewModels/navigation.js',
 
-          '<%= myConfig.prodDir %>/js/models/venueModel.js':
-            '<%= myConfig.prodDir %>/js/models/venueModel.js',
+          '<%= myConfig.prodDir %>/js/viewModels/venue.js':
+            '<%= myConfig.prodDir %>/js/viewModels/venue.js',
 
-          '<%= myConfig.prodDir %>/js/models/wikipediaModel.js':
-            '<%= myConfig.prodDir %>/js/models/wikipediaModel.js'
+          '<%= myConfig.prodDir %>/js/viewModels/wikipedia.js':
+            '<%= myConfig.prodDir %>/js/viewModels/wikipedia.js'
         }
       },
       libJs: {

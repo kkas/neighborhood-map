@@ -12,7 +12,7 @@ var myApp = myApp || {};
    * ViewModel that is related to wikipedia list.
    * @return {undefined}
    */
-  app.WikipediaModel = function() {
+  app.WikipediaViewModel = function() {
     var self = this,
       pages;
 

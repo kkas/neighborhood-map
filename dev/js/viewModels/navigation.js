@@ -14,7 +14,7 @@ var myApp = myApp || {};
    * ViewModel that is related to Navigation menu on the left.
    * @return {undefined}
    */
-  app.NavigationModel = function() {
+  app.NavigationViewModel = function() {
     var self = this;
 
     self.menuShown = ko.observable(false);

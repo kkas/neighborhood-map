@@ -1,0 +1,1 @@
+var myApp=myApp||{};!function(app){"use strict";app.NavigationViewModel=function(){var self=this;self.menuShown=ko.observable(!1),self.toggleNavMenu=function(){self.menuShown()?self.menuShown(!1):self.menuShown(!0)}}}(myApp);

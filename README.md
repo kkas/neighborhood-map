@@ -34,7 +34,7 @@ python -m SimpleHTTPServer # And access http://localhost:8000/
 |           - lib: css libraries
 |           - fonts: font files
 |       - js: contains all the js files
-|           -  models: contains models
+|           -  viewModels: contains viewModels
 |           -  lib: js libraries
 |
 ---- dev: contains all the files that are under development (change the files under this dir.)

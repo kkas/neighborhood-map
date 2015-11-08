@@ -12,7 +12,7 @@ var myApp = myApp || {};
    * ViewModel that is related to handling erros.
    * @return {undefined}
    */
-  app.ErrorModel = function() {
+  app.ErrorViewModel = function() {
     var self = this;
 
     self.error = ko.observable(false);

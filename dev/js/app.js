@@ -39,17 +39,17 @@ myApp.main = function() {
     /*
      * Properties for error handling
      */
-    self.errorHandler = new myApp.ErrorModel();
+    self.errorHandler = new myApp.ErrorViewModel();
 
     /*
      * Properties for wikipedia section.
      */
-    self.wikipedia = new myApp.WikipediaModel();
+    self.wikipedia = new myApp.WikipediaViewModel();
 
     /*
      * Properties for navigation menu.
      */
-    self.nav = new myApp.NavigationModel();
+    self.nav = new myApp.NavigationViewModel();
 
     /*
      * Properties for map.
@@ -112,7 +112,7 @@ myApp.main = function() {
     self.addVenues = function(venuesAry) {
       venuesAry.forEach(function(data) {
         // Create new venue object
-        self.venueList.push(new myApp.VenueModel(data.venue));
+        self.venueList.push(new myApp.VenueViewModel(data.venue));
       });
 
       // Save the new list to the local storage
@@ -429,7 +429,7 @@ myApp.main = function() {
       var i, length = dataAry.length;
 
       for (i = 0; i < length; i++) {
-        self.venueList.push(new myApp.VenueModel({
+        self.venueList.push(new myApp.VenueViewModel({
           name: dataAry[i].name,
           description: dataAry[i].description,
           contact: dataAry[i].contact,

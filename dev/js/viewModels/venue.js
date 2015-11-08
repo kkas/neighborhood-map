@@ -21,7 +21,7 @@ var myApp = myApp || {};
    * ViewModel that contains venue infomation
    * @return {undefined}
    */
-  app.VenueModel = function(data) {
+  app.VenueViewModel = function(data) {
     var self = this,
     icon;
 
