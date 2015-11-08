@@ -53,6 +53,7 @@ myApp.main = function() {
     self.currentInfoWindow = undefined;
     self.isTimerSet = false;
     self.curAnimatingMarker = undefined;
+    self.animationTimerID = undefined;
 
     // list that holds all the items (master list)
     self.venueList = ko.observableArray([]);
@@ -329,8 +330,12 @@ myApp.main = function() {
      */
     self.animateClickedItem = function(venue) {
       // If any marker is animating, stop it first.
-      if (self.curAnimatingMarker !== undefined) {
+      if (self.curAnimatingMarker) {
         self.curAnimatingMarker.setAnimation(null);
+        self.curAnimatingMarker = null;
+
+        // cancel the timer
+        window.clearTimeout(self.animationTimerID);
       }
 
       // If any infoWindow is opened, close it.
@@ -348,6 +353,12 @@ myApp.main = function() {
 
       // Set the animation onto the associated marker.
       venue.marker.setAnimation(google.maps.Animation.BOUNCE);
+
+      // Set a timer to stop the animation (after 3 sec)
+      self.animationTimerID = window.setTimeout(function() {
+        self.curAnimatingMarker.setAnimation(null);
+        self.curAnimatingMarker = null;
+      }, 3000);
 
       // Store the marker for the next round.
       self.curAnimatingMarker = venue.marker;
