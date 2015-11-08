@@ -291,6 +291,9 @@ myApp.main = function() {
       self.removeAllMarkers();
       self.resetListView();
 
+      // Clear the keyword text field.
+      self.keyword('');
+
       $.getJSON(config.FOURSQUARE_EXPLORE_BASE, params, function(data) {
         // create and add venues to the list.
         self.addVenues(data.response.groups[0].items);
