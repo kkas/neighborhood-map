@@ -122,6 +122,8 @@ myApp.main = function() {
      * @return {Number} a number for a zoom level of the map
      */
     self.getZoomLevel = function() {
+      // See the doc about 'window.innerWidth'
+      // https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth
       var viewportWidth = window.innerWidth;
 
       // If the device size is small, set the zoom level to a little broader
@@ -300,16 +302,6 @@ myApp.main = function() {
      * @return {undefined}
      */
     self.handleItemClick = function(venue) {
-      // Indicate whether the user is using a small device or not.
-      // See the doc about 'window.innerWidth'
-      // https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth
-      var isDeviceSmall = window.innerWidth <= config.SMALL_DEVICE_WIDTH;
-
-      // Hide the list view if the device is small.
-      if(isDeviceSmall) {
-        self.nav.menuShown(false);
-      }
-
       // Apply an animation onto the clicked item.
       // Do not stop the animation when the user clicks on the same item.
       if(self.curSelectedVenue !== venue) {
@@ -317,7 +309,8 @@ myApp.main = function() {
       }
       self.curSelectedVenue = venue;
 
-      // Close the list view.
+      // Close the list view. If the device is a large one, setting this value
+      // to false should be ignored.
       self.nav.menuShown(false);
 
       // Pan to the associated marker.
