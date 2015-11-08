@@ -44,7 +44,16 @@ myApp.main = function() {
     /*
      * Properties for navigation menu.
      */
-    self.nav = new myApp.NavigationViewModel();
+    self.menuShown = ko.observable(false);
+    // Toggle the boolean value.
+    self.toggleNavMenu = function() {
+      // If the menu is shown
+      if(self.menuShown()) {
+        self.menuShown(false);
+      } else {
+        self.menuShown(true);
+      }
+    };
 
     /*
      * Properties for map.
@@ -314,7 +323,7 @@ myApp.main = function() {
 
       // Close the list view. If the device is a large one, setting this value
       // to false should be ignored.
-      self.nav.menuShown(false);
+      self.menuShown(false);
 
       // Pan to the associated marker.
       // https://developers.google.com/maps/documentation/javascript/examples/event-simple
