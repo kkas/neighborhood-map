@@ -206,6 +206,12 @@ myApp.main = function() {
           // Attach the marker and a infoWindow with the content stored in the
           // venue object.
           self.attachInfoWindow(marker, venue.infoWindowContent);
+
+          // Add a click event listener to center the marker when a marker is
+          // clicked.
+          marker.addListener('click', function() {
+            self.map.panTo(marker.getPosition());
+          });
       });
     };
 
