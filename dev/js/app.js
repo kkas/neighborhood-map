@@ -319,6 +319,10 @@ myApp.main = function() {
 
       // Close the list view.
       self.nav.menuShown(false);
+
+      // Pan to the associated marker.
+      // https://developers.google.com/maps/documentation/javascript/examples/event-simple
+      self.map.panTo(venue.marker.getPosition());
     };
 
     /**
