@@ -10,7 +10,7 @@ With this app, you can:
  - Restore the previous results after reopen your browser (using the localstorage API)
 
 GitHub Page is available at:
-  * http://kkas.github.io/neighborhood-map/
+  * [kkas.github.io/neighborhood-map/](http://kkas.github.io/neighborhood-map/)
 
 ## How to Run
 
@@ -95,4 +95,4 @@ bundle exec sass --watch sass/input.scss:css/output.css
 
 ## References
  * https://github.com/tastejs/todomvc/tree/gh-pages/examples/knockoutjs_require
-* http://knockoutjs.com/documentation/introduction.html
+ * http://knockoutjs.com/documentation/introduction.html
