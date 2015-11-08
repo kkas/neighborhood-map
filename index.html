@@ -54,8 +54,8 @@
     </form>
 
     <!-- Placeholder to display an error message when displaying venue list is failed. -->
-    <div class="error" data-bind="if: errorHandler.error">
-      <h2 data-bind="text: errorHandler.errorMessage"></h2>
+    <div class="error" data-bind="if: listAPIError">
+      <h2 data-bind="text: listAPIErrorMessage"></h2>
     </div>
 
     <!-- Item List -->
@@ -88,7 +88,6 @@
   <script src="public/js/lib/knockout/knockout.js"></script>
 
   <script src="public/js/viewModels/venue.js"></script>
-  <script src="public/js/viewModels/error.js"></script>
   <script src="public/js/viewModels/navigation.js"></script>
   <script src="public/js/viewModels/wikipedia.js"></script>
   <script src="public/js/config.js"></script>

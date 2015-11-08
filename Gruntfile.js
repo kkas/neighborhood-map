@@ -111,9 +111,6 @@ module.exports = function(grunt) {
           '<%= myConfig.prodDir %>/js/loadGoogleMapScriptAsync.js':
             '<%= myConfig.prodDir %>/js/loadGoogleMapScriptAsync.js',
 
-          '<%= myConfig.prodDir %>/js/viewModels/error.js':
-            '<%= myConfig.prodDir %>/js/viewModels/error.js',
-
           '<%= myConfig.prodDir %>/js/viewModels/navigation.js':
             '<%= myConfig.prodDir %>/js/viewModels/navigation.js',
 

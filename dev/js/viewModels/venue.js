@@ -126,5 +126,8 @@ var myApp = myApp || {};
     // Set false when you want not to show this item on the list.
     self.isVisible = ko.observable(true);
 
+    self.error = ko.observable(false);
+    self.errorMessage = 'Failed to get response from FourSquare Search';
+
   }; // end of VenueModel
 })(myApp);

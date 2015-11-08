@@ -37,11 +37,6 @@ myApp.main = function() {
     var self = this;
 
     /*
-     * Properties for error handling
-     */
-    self.errorHandler = new myApp.ErrorViewModel();
-
-    /*
      * Properties for wikipedia section.
      */
     self.wikipedia = new myApp.WikipediaViewModel();
@@ -63,6 +58,9 @@ myApp.main = function() {
     self.venueList = ko.observableArray([]);
     self.keyword = ko.observable('');
     self.curSelectedVenue = undefined;
+    self.listAPIError = ko.observable(false);
+    self.listAPIErrorMessage = 'Failed to get response from ' +
+      'FourSquare Search';
 
     /**
      * Function that handles the filtering when the user type in
@@ -241,7 +239,7 @@ myApp.main = function() {
       self.venueList.removeAll();
 
       // Reset the error flag.
-      self.errorHandler.error(false);
+      self.listAPIError(false);
     };
 
     /**
@@ -297,7 +295,7 @@ myApp.main = function() {
         // create markers on the map
         self.createMarkers();
       }).fail(function() {
-        self.errorHandler.error(true);
+        self.listAPIError(true);
       });
     };
 
