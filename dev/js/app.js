@@ -22,14 +22,8 @@ myApp.main = function() {
     lng: -122.4194200
   };
 
-  var foursquareSearchAPI = 'https://api.foursquare.com/v2/venues/search?' +
-    'll=' + initialLocation.lat + ',' + initialLocation.lng +
-    '&client_id=' + config.CLIENT_ID + '&client_secret=' +
-    config.CLIENT_SECRET + '&v=20151030';
-
-  var WIKIPEDIA_API_BASE ='https://en.wikipedia.org//w/api.php' +
-      '?action=query&prop=extracts&format=json&exintro=' +
-      '&titles=San%20Francisco&callback=?';
+  var FOURSQUARE_SEARCH_BASE = 'https://api.foursquare.com/v2/venues/search';
+  var WIKIPEDIA_BASE ='https://en.wikipedia.org//w/api.php?callback=?';
 
   /**
    * ViewModel of this application.
@@ -244,6 +238,29 @@ myApp.main = function() {
     };
 
     /**
+     * Create parameters for querying Foursquare API.
+     * @param  {Object} params Object that contains additional parameters.
+     * @return {Object} a object that contains parameters.
+     */
+    self.createFoursquareAPIParams = function(params) {
+      var tmp = {};
+
+      // If any params are passed in, add them to the returned object.
+      if(params) {
+        for(var key in params) {
+          tmp[key] = params[key];
+        }
+      }
+
+      // parameters necessary for authentication
+      tmp.client_id = config.CLIENT_ID;
+      tmp.client_secret = config.CLIENT_SECRET;
+      tmp.v = '20151030';
+
+      return tmp;
+    };
+
+    /**
      * Call the API to retrieve items based on the keyword that is typed in
      * from the user.
      * Currently, FourSquare Search API is used.
@@ -253,19 +270,20 @@ myApp.main = function() {
      * @return {undefined}
      */
     self.createNewList = function() {
-      var query = foursquareSearchAPI;
+      // Use keywords for query if any.
+      var keywordQuery = self.keyword() ? {query: self.keyword()} : {},
+          params;
+
+      // Add more parameters and combine them with keyword queries.
+      keywordQuery.ll = initialLocation.lat + ',' + initialLocation.lng;
+      params = self.createFoursquareAPIParams(keywordQuery);
 
       // Clean up the current venue list.
       // Remove all the markers first, and the delete the items in the list.
       self.removeAllMarkers();
       self.resetListView();
 
-      // Use the keyword if any for the search.
-      if (self.keyword().length > 0) {
-        query += '&query=' + self.keyword();
-      }
-
-      $.getJSON(query, function(data) {
+      $.getJSON(FOURSQUARE_SEARCH_BASE, params, function(data) {
         // create and add venues to the list.
         self.addVenues(data.response.venues);
 
@@ -336,11 +354,39 @@ myApp.main = function() {
     };
 
     /**
+     * Create parameters for querying Wikipedia API.
+     * @param  {Object} params Object that contains additional parameters.
+     * @return {Object} a object that contains parameters.
+     */
+    self.createWikipediaAPIParams = function(params) {
+      var tmp = {};
+
+      // If any params are passed in, add them to the returned object.
+      if(params) {
+        for(var key in params) {
+          tmp[key] = params[key];
+        }
+      }
+
+      // add necessary parameters
+      tmp.action = 'query';
+      tmp.prop = 'extracts';
+      tmp.format = 'json';
+      tmp.exintro = '';
+      tmp.titles = 'San Francisco';
+
+      return tmp;
+    };
+
+    /**
      * Call the wikipedia API and set the content if success.
      * @return {undefined}
      */
     self.getWikipediaContent = function() {
-      $.getJSON(WIKIPEDIA_API_BASE, function(data) {
+      // Add more parameters.
+      var params = self.createWikipediaAPIParams({});
+
+      $.getJSON(WIKIPEDIA_BASE, params, function(data) {
         // Set the content
         self.setWikipediaResult(data);
       }).fail(function() {
