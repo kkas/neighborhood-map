@@ -19,18 +19,6 @@ myApp.main = function() {
   var config = myApp.config;
 
   /**
-   * [initialLocation description]
-   * @type {Object}
-   */
-  var initialLocation = {
-    lat: 37.7749300,
-    lng: -122.4194200
-  };
-
-  var FOURSQUARE_EXPLORE_BASE = 'https://api.foursquare.com/v2/venues/explore';
-  var WIKIPEDIA_BASE ='https://en.wikipedia.org//w/api.php?callback=?';
-
-  /**
    * ViewModel of this application.
    */
   var ViewModel = function() {
@@ -151,7 +139,7 @@ myApp.main = function() {
           zoomLevel = self.getZoomLevel();
 
       var latlng = new google.maps.LatLng(
-        initialLocation.lat, initialLocation.lng);
+        config.initialLocation.lat, config.initialLocation.lng);
 
       var mapOptions = {
         zoom: zoomLevel,
@@ -289,7 +277,7 @@ myApp.main = function() {
           params;
 
       // Add more parameters and combine them with keyword queries.
-      keywordQuery.ll = initialLocation.lat + ',' + initialLocation.lng;
+      keywordQuery.ll = config.initialLocation.lat + ',' + config.initialLocation.lng;
       params = self.createFoursquareAPIParams(keywordQuery);
 
       // Clean up the current venue list.
@@ -297,7 +285,7 @@ myApp.main = function() {
       self.removeAllMarkers();
       self.resetListView();
 
-      $.getJSON(FOURSQUARE_EXPLORE_BASE, params, function(data) {
+      $.getJSON(config.FOURSQUARE_EXPLORE_BASE, params, function(data) {
         // create and add venues to the list.
         self.addVenues(data.response.groups[0].items);
 
@@ -405,7 +393,7 @@ myApp.main = function() {
       // Add more parameters.
       var params = self.createWikipediaAPIParams({});
 
-      $.getJSON(WIKIPEDIA_BASE, params, function(data) {
+      $.getJSON(config.WIKIPEDIA_BASE, params, function(data) {
         // Set the content
         self.setWikipediaResult(data);
       }).fail(function() {
