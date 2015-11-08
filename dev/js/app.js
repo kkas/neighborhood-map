@@ -121,17 +121,31 @@ myApp.main = function() {
     };
 
     /**
+     * Return a zoom level for the map. The level will be determined by the
+     * viewport width. If the device is small, it will return a smaller number,
+     * which will give broader map view.
+     * @return {Number} a number for a zoom level of the map
+     */
+    self.getZoomLevel = function() {
+      var viewportWidth = window.innerWidth;
+
+      // If the device size is small, set the zoom level to a little broader
+      return viewportWidth < myApp.config.SMALL_DEVICE_WIDTH ? 13 : 18;
+    };
+
+    /**
      * Load the map on the screen.
      * @return {undefined}
      */
     self.loadGoogleMap = function() {
-      var canvas = document.getElementById('map-canvas');
+      var canvas = document.getElementById('map-canvas'),
+          zoomLevel = self.getZoomLevel();
 
       var latlng = new google.maps.LatLng(
         initialLocation.lat, initialLocation.lng);
 
       var mapOptions = {
-        zoom: 18,
+        zoom: zoomLevel,
         center: latlng,
       };
 
