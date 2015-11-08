@@ -21,7 +21,7 @@ var myApp = myApp || {};
     self.title = ko.observable('San Francisco');
 
     self.error = ko.observable(false);
-    self.errorMsg = 'Currently Not Available. Try Again Later.';
+    self.errorMsg = 'Wikipedia is currently not available. Try again later.';
   };
 
 })(myApp);
