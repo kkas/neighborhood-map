@@ -1,3 +1,8 @@
+/**
+ * This file contains the main ViewModel, "ViewModel".
+ * 'myApp.main()' will be called from outside when the application is ready
+ * to start.
+ */
 // This file depends on jQuery. So, load it beforehand.
 
 // Global variable.

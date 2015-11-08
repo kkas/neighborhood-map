@@ -1,3 +1,6 @@
+/**
+ * This file contains scripts to load the Google Map Asynchronously.
+ */
 // This file depends on jQuery. So, load it beforehand.
 
 // Global variable.

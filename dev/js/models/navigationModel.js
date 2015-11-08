@@ -1,3 +1,6 @@
+/**
+ * This file contains a ViewModel that is related to the navigation menu.
+ */
 // This file depends on jQuery. So, load it beforehand.
 
 // Global variable.

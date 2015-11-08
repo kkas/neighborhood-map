@@ -1,3 +1,6 @@
+/**
+ * This file contains a ViewModel that is related to venue info.
+ */
 // Global variable.
 var myApp = myApp || {};
 

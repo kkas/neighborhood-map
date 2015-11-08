@@ -1,3 +1,6 @@
+/**
+ * This file contains a ViewModel that is related to the Wikipedia.
+ */
 // Global variable.
 var myApp = myApp || {};
 

@@ -1,3 +1,6 @@
+/**
+ * This file contains various configurations of the entire application.
+ */
 // Global variable.
 var myApp = myApp || {};
 
