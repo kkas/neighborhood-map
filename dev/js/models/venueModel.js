@@ -1,5 +1,6 @@
 /**
  * This file contains a ViewModel that is related to venue info.
+ * This viewModel is a sub viewModel of the main viewModel.
  */
 // Global variable.
 var myApp = myApp || {};
@@ -17,7 +18,8 @@ var myApp = myApp || {};
   var ICON_SIZE = '32';
 
   /**
-   * Model that contains venue infomation
+   * ViewModel that contains venue infomation
+   * @return {undefined}
    */
   app.VenueModel = function(data) {
     var self = this,

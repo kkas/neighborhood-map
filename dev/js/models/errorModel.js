@@ -1,7 +1,7 @@
 /**
  * This file contains a ViewModel that is related to errors.
+ * This viewModel is a sub viewModel of the main viewModel.
  */
-
 // Global variable.
 var myApp = myApp || {};
 
