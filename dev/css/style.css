@@ -305,10 +305,10 @@ form {
 
 .contact-list {
   list-style: none;
-  padding: 0;
+  padding-left: 10px;
 }
 
-.contact-key {
+.content-label {
   font-weight: bold;
   font-style: italic;
 }

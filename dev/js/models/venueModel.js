@@ -32,18 +32,31 @@ var myApp = myApp || {};
      * used in the infoWindow.
      */
     self.createInfoWindowContent = function() {
-      var infoWindowContentHTML = '<div class="content">';
+      var infoWindowContentHTML = '<div class="content">',
+          // name uses a different format.
+          NAME_TMPL = '<p class="name">%%data%%</p>',
+          BASE_TMPL = '<p><span class="content-label">%%label%%' +
+            '</span>%%data%%</p>',
+          URL_TMPL = BASE_TMPL.replace(/%%label%%/, 'URL: ').
+            replace(/%%data%%/, '<a href="%%data%%">%%data%%</a>'),
+          CONTACT_TMPL = BASE_TMPL.replace(/%%label%%/, 'Contact: ').
+            replace(/%%data%%/, '<ul class="contact-list">%%data%%</ul>'),
+          HOURS_TMPL = BASE_TMPL.replace(/%%label%%/, 'Hours: '),
+          PRICE_TMPL = BASE_TMPL.replace(/%%label%%/, 'Price: '),
+          RATING_TMPL = BASE_TMPL.replace(/%%label%%/, 'Rating: ');
 
       infoWindowContentHTML += self['name'] ?
-        '<p class="name">' + self['name'] + '</p>' : '';
+        NAME_TMPL.replace(/%%data%%/, self['name']) : '';
       infoWindowContentHTML += self['contactHTML'] ?
-        '<p class="contact">' + self['contactHTML'] + '</p>' : '';
-      infoWindowContentHTML += self['popular'] ?
-        '<p class="popular">' + self['popular'] + '</p>' : '';
-      infoWindowContentHTML += self['likes'] ?
-        '<p class="likes">' + self['likes'] + '</p>' : '';
-      infoWindowContentHTML += self['shortUrl'] ?
-        '<p class="shortUrl">' + self['shortUrl'] + '</p>' : '';
+        CONTACT_TMPL.replace(/%%data%%/, self['contactHTML']) : '';
+      infoWindowContentHTML += self['url'] ?
+        URL_TMPL.replace(/%%data%%/g, self['url']) : '';
+      infoWindowContentHTML += self['hours'] && self['hours'].status ?
+        HOURS_TMPL.replace(/%%data%%/, self['hours'].status) : '';
+      infoWindowContentHTML += self['price'] ?
+        PRICE_TMPL.replace(/%%data%%/, self['price'].message) : '';
+      infoWindowContentHTML += self['rating'] ?
+        RATING_TMPL.replace(/%%data%%/, self['rating']) : '';
 
       infoWindowContentHTML += '</div>';
 
@@ -58,17 +71,16 @@ var myApp = myApp || {};
      * infoWindow.
      */
     self.createContact = function(contact) {
-      var contactHTML = '<ul class="contact-list">',
-        key;
+      var contactHTML = '',
+          BASE_TMPL = '<li><span class="content-label">%%label%%: </span>' +
+            '%%data%%</li>',
+          TWITTER_TMPL = BASE_TMPL.replace(/%%label%%/, "Twitter"),
+          FORMATTED_PHONE_TMPL = BASE_TMPL.replace(/%%label%%/, "Phone");
 
-      for (key in contact) {
-        if (contact[key]) {
-          contactHTML += '<li>' + '<span class="contact-key">' + key +
-          ': </span>' + contact[key] + '</li>';
-        }
-      }
-
-      contactHTML += '</ul>';
+      contactHTML += contact.twitter ? TWITTER_TMPL.replace(
+          /%%data%%/, '@' + contact.twitter) : '';
+      contactHTML += contact.formattedPhone ? FORMATTED_PHONE_TMPL.replace(
+          /%%data%%/, contact.formattedPhone) : '';
 
       return contactHTML;
     };
@@ -87,6 +99,10 @@ var myApp = myApp || {};
     self.shortUrl = data.shortUrl || '';
     self.location = data.location || '';
     self.categories = data.categories || [];
+    self.url = data.url || '';
+    self.hours = data.hours || '';
+    self.price = data.price || '';
+    self.rating = data.rating || '';
 
     /*
      * categories can be empty. See the doc for this for more info.

@@ -27,7 +27,7 @@ myApp.main = function() {
     lng: -122.4194200
   };
 
-  var FOURSQUARE_SEARCH_BASE = 'https://api.foursquare.com/v2/venues/search';
+  var FOURSQUARE_EXPLORE_BASE = 'https://api.foursquare.com/v2/venues/explore';
   var WIKIPEDIA_BASE ='https://en.wikipedia.org//w/api.php?callback=?';
 
   /**
@@ -112,7 +112,7 @@ myApp.main = function() {
     self.addVenues = function(venuesAry) {
       venuesAry.forEach(function(data) {
         // Create new venue object
-        self.venueList.push(new myApp.VenueModel(data));
+        self.venueList.push(new myApp.VenueModel(data.venue));
       });
 
       // Save the new list to the local storage
@@ -290,9 +290,9 @@ myApp.main = function() {
       self.removeAllMarkers();
       self.resetListView();
 
-      $.getJSON(FOURSQUARE_SEARCH_BASE, params, function(data) {
+      $.getJSON(FOURSQUARE_EXPLORE_BASE, params, function(data) {
         // create and add venues to the list.
-        self.addVenues(data.response.venues);
+        self.addVenues(data.response.groups[0].items);
 
         // create markers on the map
         self.createMarkers();
@@ -442,6 +442,10 @@ myApp.main = function() {
           // marker: dataAry[i].marker,
           infoWindowContent: dataAry[i].infoWindowContent,
           categories: dataAry[i].categories,
+          url: dataAry[i].url,
+          hours: dataAry[i].hours,
+          price: dataAry[i].price,
+          rating: dataAry[i].rating
         }));
       }
     };
