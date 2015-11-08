@@ -63,6 +63,7 @@ myApp.main = function() {
     // list that holds all the items (master list)
     self.venueList = ko.observableArray([]);
     self.keyword = ko.observable('');
+    self.curSelectedVenue = undefined;
 
     /**
      * Function that handles the filtering when the user type in
@@ -292,7 +293,11 @@ myApp.main = function() {
       }
 
       // Apply an animation onto the clicked item.
-      self.animateClickedItem(venue);
+      // Do not stop the animation when the user clicks on the same item.
+      if(self.curSelectedVenue !== venue) {
+        self.animateClickedItem(venue);
+      }
+      self.curSelectedVenue = venue;
 
       // Close the list view.
       self.nav.menuShown(false);
