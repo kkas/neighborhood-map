@@ -127,7 +127,7 @@ myApp.main = function() {
       var viewportWidth = window.innerWidth;
 
       // If the device size is small, set the zoom level to a little broader
-      return viewportWidth < myApp.config.SMALL_DEVICE_WIDTH ? 13 : 18;
+      return viewportWidth < myApp.config.SMALL_DEVICE_WIDTH ? 13 : 15;
     };
 
     /**
