@@ -35,7 +35,7 @@
         <div class="place-name">About <span data-bind="text: title"></span></div>
         <div class="wiki-content" data-bind="html: content">
         </div>
-        <div data-bind="if: showError">
+        <div data-bind="if: error">
           <p class="error" data-bind="text: errorMsg"></p>
         </div>
       </div>
@@ -54,7 +54,7 @@
     </form>
 
     <!-- Placeholder to display an error message when displaying venue list is failed. -->
-    <div class="error" data-bind="if: errorHandler.displayErrorMessage">
+    <div class="error" data-bind="if: errorHandler.error">
       <h2 data-bind="text: errorHandler.errorMessage"></h2>
     </div>
 

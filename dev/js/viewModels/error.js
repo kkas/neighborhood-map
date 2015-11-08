@@ -17,9 +17,6 @@ var myApp = myApp || {};
 
     self.error = ko.observable(false);
     self.errorMessage = 'Failed to get response from FourSquare Search';
-    self.displayErrorMessage = ko.computed(function() {
-      return self.error();
-    });
   };
 
 })(myApp);

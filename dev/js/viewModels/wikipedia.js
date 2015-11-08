@@ -22,9 +22,6 @@ var myApp = myApp || {};
 
     self.error = ko.observable(false);
     self.errorMsg = 'Currently Not Available. Try Again Later.';
-    self.showError = ko.computed(function() {
-      return self.error();
-    });
   };
 
 })(myApp);
