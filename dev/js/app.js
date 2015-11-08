@@ -293,6 +293,9 @@ myApp.main = function() {
 
       // Apply an animation onto the clicked item.
       self.animateClickedItem(venue);
+
+      // Close the list view.
+      self.nav.menuShown(false);
     };
 
     /**
