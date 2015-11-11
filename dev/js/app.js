@@ -332,9 +332,6 @@ myApp.main = function() {
       if(self.curAnimatingMarker) {
         self.curAnimatingMarker.setAnimation(null);
 
-        // cancel the timer
-        window.clearTimeout(self.animationTimerID);
-
         // If the current animating marker is the same as the one that is
         // clicked, then just stop the animation. (by returning here)
         if(self.curAnimatingMarker === venue.marker) {
@@ -345,12 +342,6 @@ myApp.main = function() {
 
       // Set the animation onto the associated marker.
       venue.marker.setAnimation(google.maps.Animation.BOUNCE);
-
-      // Set a timer to stop the animation (after 3 sec)
-      self.animationTimerID = window.setTimeout(function() {
-        self.curAnimatingMarker.setAnimation(null);
-        self.curAnimatingMarker = null;
-      }, 3000);
 
       // Store the marker for the next round.
       self.curAnimatingMarker = venue.marker;
