@@ -280,8 +280,8 @@ myApp.main = function() {
       // Toggle the animation.
       self.toggleAnimateClickedItem(venue);
 
-      // Create a new associated infoWindow
-      self.createInfoWindow(venue.infoWindowContent, venue.marker);
+      // Toggle the associated infoWindow
+      self.toggleInfoWindow(venue.infoWindowContent, venue.marker);
 
       // Close the list view. If the device is a large one, setting this value
       // to false should be ignored.
@@ -293,17 +293,24 @@ myApp.main = function() {
     };
 
     /**
-     * Create an infoWindow that is associated the passed marker and the
+     * Toggle the infoWindow that is associated the passed marker and the
      * content.
      * @param  {String} content content HTML of the infoWindow.
      * @param  {[type]} marker  marker that the infoWindow points to when it gets
      * open.
      * @return {undefined}
      */
-    self.createInfoWindow = function(content, marker) {
-      // If any infoWindow is opened, close it.
-      if(infoWindow !== undefined) {
+    self.toggleInfoWindow = function(content, marker) {
+      // If the infoWindow is opened, close it.
+      if(infoWindow) {
         infoWindow.close();
+
+        // If the current infoWindow is the same infoWindow that is going to be
+        // created, just close the infoWindow.
+        if(content === infoWindow.getContent()) {
+          infoWindow = undefined;
+          return;
+        }
       }
 
       // Recreate the infoWindow based on the info stored in the clicked object.
