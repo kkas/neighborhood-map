@@ -174,11 +174,8 @@ myApp.main = function() {
           // Add a click event listener to center the marker when a marker is
           // clicked and to create and open an associated infoWindow.
           marker.addListener('click', function() {
-            // Create a new associated infoWindow
-            self.createInfoWindow(venue.infoWindowContent, venue.marker);
-
-            // Make the clicked marker centered.
-            self.map.panTo(marker.getPosition());
+            // handle the click event
+            self.handleItemClick(venue);
           });
       });
     };
@@ -286,6 +283,9 @@ myApp.main = function() {
       }
       self.curSelectedVenue = venue;
 
+      // Create a new associated infoWindow
+      self.createInfoWindow(venue.infoWindowContent, venue.marker);
+
       // Close the list view. If the device is a large one, setting this value
       // to false should be ignored.
       self.menuShown(false);
@@ -320,7 +320,6 @@ myApp.main = function() {
 
     /**
      * Set the bouncing animation to the marker that is clicked.
-     * Then open the associated infoWindow for the marker.
      * @param  {venueViewModel} venue venue item on which the user just clicked.
      * @return {undefined}
      */
@@ -333,9 +332,6 @@ myApp.main = function() {
         // cancel the timer
         window.clearTimeout(self.animationTimerID);
       }
-
-      // Create a new associated infoWindow
-      self.createInfoWindow(venue.infoWindowContent, venue.marker);
 
       // Set the animation onto the associated marker.
       venue.marker.setAnimation(google.maps.Animation.BOUNCE);
