@@ -75,9 +75,14 @@ myApp.main = function() {
         length = self.venueList().length,
         i;
 
-      // Close the current open infoWindow if any.
+      // Close the current open infoWindow if any, and stop the animation
+      // on the associated marker
       if (infoWindow !== undefined) {
         infoWindow.close();
+      }
+      if (self.curAnimatingMarker) {
+        self.curAnimatingMarker.setAnimation(null);
+        self.curAnimatingMarker = null;
       }
 
       for (i = 0; i < length; i++) {
