@@ -77,8 +77,9 @@ myApp.main = function() {
 
       // Close the current open infoWindow if any, and stop the animation
       // on the associated marker
-      if (infoWindow !== undefined) {
+      if (infoWindow) {
         infoWindow.close();
+        infoWindow = null;
       }
       if (self.curAnimatingMarker) {
         self.curAnimatingMarker.setAnimation(null);
@@ -196,7 +197,7 @@ myApp.main = function() {
       // Remove all the markers from the map.
       for (i = 0; i < length; i++) {
         marker = self.venueList()[i].marker;
-        if (marker !== undefined) {
+        if (marker) {
           self.venueList()[i].marker.setMap(null);
         }
       }
@@ -313,7 +314,7 @@ myApp.main = function() {
         // If the current infoWindow is the same infoWindow that is going to be
         // created, just close the infoWindow.
         if(content === infoWindow.getContent()) {
-          infoWindow = undefined;
+          infoWindow = null;
           return;
         }
       }
