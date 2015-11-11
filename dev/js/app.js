@@ -16,7 +16,10 @@ var myApp = myApp || {};
 myApp.main = function() {
   'use strict';
 
-  var config = myApp.config;
+  var config = myApp.config,
+      // Having this infoWindow at the top level of the main app,
+      // only one infoWindow can be open at once.
+      infoWindow;
 
   /**
    * ViewModel of this application.
@@ -47,7 +50,6 @@ myApp.main = function() {
      * Properties for map.
      */
     self.map = undefined;
-    self.currentInfoWindow = undefined;
     self.curAnimatingMarker = undefined;
     self.animationTimerID = undefined;
 
@@ -74,9 +76,9 @@ myApp.main = function() {
         length = self.venueList().length,
         i;
 
-      // Close the current opened infoWindow if any.
-      if (self.currentInfoWindow !== undefined) {
-        self.currentInfoWindow.close();
+      // Close the current open infoWindow if any.
+      if (infoWindow !== undefined) {
+        infoWindow.close();
       }
 
       for (i = 0; i < length; i++) {
@@ -150,44 +152,10 @@ myApp.main = function() {
     };
 
     /**
-     * Attach an infoWindow to a marker.
-     * Add the click event listener that opens the infoWindow.
-     *
-     * The infoWindow will keep the content that is associated with the
-     * marker.
+     * Create makers on the map with the infoWindows.
      *
      * Inspired by:
      * https://developers.google.com/maps/documentation/javascript/events#EventClosures
-     *
-     * @param  {google.maps.Marker} marker      a marker object to which the
-     * event listener will be attached
-     * @param  {String} contentHTML String that contains the content of the
-     * infoWindow
-     * @return {undefined}
-     */
-    self.attachInfoWindow = function(marker, contentHTML) {
-      var infoWindow = new google.maps.InfoWindow({
-        content: contentHTML
-      });
-
-      // Add a click event listener
-      marker.addListener('click', function() {
-        infoWindow.open(marker.get('map'), marker);
-
-        // Only one infoWindow can be open at once.
-        // If the current InfoWindow and infoWindow are the same,
-        // meaning the same marker is clicked in a row, do not close it.
-        if (self.currentInfoWindow !== infoWindow &&
-          self.currentInfoWindow !== undefined) {
-          self.currentInfoWindow.close();
-        }
-
-        self.currentInfoWindow = infoWindow;
-      });
-    };
-
-    /**
-     * Create makers on the map with the infoWindows.
      * @return {undefined}
      */
     self.createMarkers = function() {
@@ -203,13 +171,22 @@ myApp.main = function() {
           // Set the marker to the current venue object.
           venue.marker = marker;
 
-          // Attach the marker and a infoWindow with the content stored in the
-          // venue object.
-          self.attachInfoWindow(marker, venue.infoWindowContent);
-
           // Add a click event listener to center the marker when a marker is
-          // clicked.
+          // clicked and to create and open an associated infoWindow.
           marker.addListener('click', function() {
+            // Close the current infoWindow if any.
+            if(infoWindow !== undefined) {
+              infoWindow.close();
+            }
+
+            // Create a new associated infoWindow.
+            infoWindow = new google.maps.InfoWindow({
+              content: venue.infoWindowContent
+            });
+
+            infoWindow.open(marker.get('map'), marker);
+
+            // Make the clicked marker centered.
             self.map.panTo(marker.getPosition());
           });
       });
@@ -344,17 +321,17 @@ myApp.main = function() {
       }
 
       // If any infoWindow is opened, close it.
-      if(self.currentInfoWindow !== undefined) {
-        self.currentInfoWindow.close();
+      if(infoWindow !== undefined) {
+        infoWindow.close();
       }
 
       // Recreate the infoWindow based on the info stored in the clicked object.
-      self.currentInfoWindow = new google.maps.InfoWindow({
+      infoWindow = new google.maps.InfoWindow({
         content: venue.infoWindowContent
       });
 
       // Open the newly created infoWindow.
-      self.currentInfoWindow.open(venue.marker.get('map'), venue.marker);
+      infoWindow.open(venue.marker.get('map'), venue.marker);
 
       // Set the animation onto the associated marker.
       venue.marker.setAnimation(google.maps.Animation.BOUNCE);
