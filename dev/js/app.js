@@ -56,7 +56,6 @@ myApp.main = function() {
     // list that holds all the items (master list)
     self.venueList = ko.observableArray([]);
     self.keyword = ko.observable('');
-    self.curSelectedVenue = undefined;
     self.listAPIError = ko.observable(false);
     self.listAPIErrorMessage = 'Failed to get response from ' +
       'FourSquare Search';
@@ -271,17 +270,15 @@ myApp.main = function() {
     };
 
     /**
-     * Handle a click event of an item in the list view.
+     * Handle a click event of an item.
+     * This item can be either a marker or a item list since they do the
+     * same things.
      * @param  {venueViewModel} venue venue item on which the user just clicked.
      * @return {undefined}
      */
     self.handleItemClick = function(venue) {
-      // Apply an animation onto the clicked item.
-      // Do not stop the animation when the user clicks on the same item.
-      if(self.curSelectedVenue !== venue) {
-        self.animateClickedItem(venue);
-      }
-      self.curSelectedVenue = venue;
+      // Toggle the animation.
+      self.toggleAnimateClickedItem(venue);
 
       // Create a new associated infoWindow
       self.createInfoWindow(venue.infoWindowContent, venue.marker);
@@ -319,18 +316,24 @@ myApp.main = function() {
     };
 
     /**
-     * Set the bouncing animation to the marker that is clicked.
+     * Toggle the bouncing animation to the marker that is clicked.
      * @param  {venueViewModel} venue venue item on which the user just clicked.
      * @return {undefined}
      */
-    self.animateClickedItem = function(venue) {
-      // If any marker is animating, stop it first.
-      if (self.curAnimatingMarker) {
+    self.toggleAnimateClickedItem = function(venue) {
+      // If any marker is animating, stop it.
+      if(self.curAnimatingMarker) {
         self.curAnimatingMarker.setAnimation(null);
-        self.curAnimatingMarker = null;
 
         // cancel the timer
         window.clearTimeout(self.animationTimerID);
+
+        // If the current animating marker is the same as the one that is
+        // clicked, then just stop the animation. (by returning here)
+        if(self.curAnimatingMarker === venue.marker) {
+          self.curAnimatingMarker = null;
+          return;
+        }
       }
 
       // Set the animation onto the associated marker.
