@@ -19,6 +19,9 @@ $tablet-or-larger: "(min-width: #{$tablet-width})";
 $tablet-or-larger-land: "(min-width: #{$tablet-width}) and (orientation: landscape)";
 $desktop-or-larger: "(min-width: #{$desktop-width})";
 
+@mixin slideAnimation {
+  transition: transform 0.3s ease;
+}
 
 html,
 body,
@@ -53,7 +56,7 @@ body {
 
 main.shifted {
  transform: translate($nav-width, 0);
- transition: transform 0.3s ease;
+ @include slideAnimation;
 }
 // @media screen and (orientation: landscape) {
 /** Mobile in landscape mode */
@@ -196,6 +199,7 @@ nav {
 
 nav.open {
   transform: translate(0, 0);
+  @include slideAnimation;
 }
 
 
